@@ -1,5 +1,5 @@
-def CONTAINER_NAME="politiesysteem"
-def CONTAINER_TAG="latest"
+//def CONTAINER_NAME="politiesysteem"
+//def CONTAINER_TAG="latest"
 
 pipeline {
     agent any
