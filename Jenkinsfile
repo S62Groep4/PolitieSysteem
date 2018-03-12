@@ -4,32 +4,24 @@ def CONTAINER_TAG="latest"
 
 node {
     stage('Initialize'){
-        steps{
             def dockerHome = tool 'Docker'
             def mavenHome  = tool 'Maven3'
             env.PATH = "${dockerHome}/bin:${mavenHome}/bin:${env.PATH}"
-        }
     }
 
     stage('Checkout') {
-        steps{
-            checkout scm
-        }
+        checkout scm
     }
 
     stage('Build'){
-        steps{
-            sh "mvn clean install"
-        }
+        sh "mvn clean install"
     }
 
     stage('Sonar'){
-        steps{
-            try {
-                sh "mvn sonar:sonar"
-            } catch(error){
-                echo "The sonar server could not be reached ${error}"
-            }
+        try {
+            sh "mvn sonar:sonar"
+        } catch(error){
+            echo "The sonar server could not be reached ${error}"
         }
     }
 
@@ -46,11 +38,9 @@ node {
     }*/
 
     stage('Docker-compose'){
-        steps{
-            try {
-                sh "docker-compose up"
-            }catch(error){}
-        }
+        try {
+            sh "docker-compose up"
+        }catch(error){}
     }
 }
 
