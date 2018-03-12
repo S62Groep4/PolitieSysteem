@@ -6,24 +6,32 @@ pipeline {
 
     stages {
         stage('Initialize'){
-            def dockerHome = tool 'Docker'
-            def mavenHome  = tool 'Maven3'
-            env.PATH = "${dockerHome}/bin:${mavenHome}/bin:${env.PATH}"
+            steps{
+                def dockerHome = tool 'Docker'
+                def mavenHome  = tool 'Maven3'
+                env.PATH = "${dockerHome}/bin:${mavenHome}/bin:${env.PATH}"
+            }
         }
 
         stage('Checkout') {
-            checkout scm
+            steps{
+                checkout scm
+            }
         }
 
         stage('Build'){
-            sh "mvn clean install"
+            steps{
+                sh "mvn clean install"
+            }
         }
 
         stage('Sonar'){
-            try {
-                sh "mvn sonar:sonar"
-            } catch(error){
-                echo "The sonar server could not be reached ${error}"
+            steps{
+                try {
+                    sh "mvn sonar:sonar"
+                } catch(error){
+                    echo "The sonar server could not be reached ${error}"
+                }
             }
         }
 
@@ -40,12 +48,13 @@ pipeline {
         }*/
 
         stage('Docker-compose'){
-            try {
-                sh "docker-compose up"
-            }catch(error){}
+            steps{
+                try {
+                    sh "docker-compose up"
+                }catch(error){}
+            }
         }
     }
-
 }
 
 /*def imagePrune(containerName){
