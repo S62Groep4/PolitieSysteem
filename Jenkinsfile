@@ -1,7 +1,6 @@
 def CONTAINER_NAME="politiesysteem"
 def CONTAINER_TAG="latest"
 
-
 node {
     git url: 'https://github.com/S62Groep4/PolitieSysteem.git'
 
