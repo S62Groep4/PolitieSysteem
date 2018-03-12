@@ -3,6 +3,8 @@ def CONTAINER_TAG="latest"
 
 
 node {
+    git url: 'https://github.com/S62Groep4/PolitieSysteem.git'
+
     stage('Initialize'){
         def dockerHome = tool 'Docker'
         def mavenHome  = tool 'Maven3'
@@ -27,7 +29,7 @@ node {
 
     stage('Docker-compose'){
         try {
-            sh "sudo docker-compose up"
+            sh "sudo docker-compose up -d"
         }catch(error){}
     }
 }
