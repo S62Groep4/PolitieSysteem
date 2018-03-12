@@ -3,54 +3,53 @@ def CONTAINER_TAG="latest"
 
 
 node {
-        stage('Initialize'){
-            steps{
-                def dockerHome = tool 'Docker'
-                def mavenHome  = tool 'Maven3'
-                env.PATH = "${dockerHome}/bin:${mavenHome}/bin:${env.PATH}"
+    stage('Initialize'){
+        steps{
+            def dockerHome = tool 'Docker'
+            def mavenHome  = tool 'Maven3'
+            env.PATH = "${dockerHome}/bin:${mavenHome}/bin:${env.PATH}"
+        }
+    }
+
+    stage('Checkout') {
+        steps{
+            checkout scm
+        }
+    }
+
+    stage('Build'){
+        steps{
+            sh "mvn clean install"
+        }
+    }
+
+    stage('Sonar'){
+        steps{
+            try {
+                sh "mvn sonar:sonar"
+            } catch(error){
+                echo "The sonar server could not be reached ${error}"
             }
         }
+    }
 
-        stage('Checkout') {
-            steps{
-                checkout scm
-            }
-        }
+    /*stage("Image Prune"){
+        imagePrune(CONTAINER_NAME)
+    }*/
 
-        stage('Build'){
-            steps{
-                sh "mvn clean install"
-            }
-        }
+    /*stage('Image Build'){
+        imageBuild(CONTAINER_NAME, CONTAINER_TAG)
+    }
 
-        stage('Sonar'){
-            steps{
-                try {
-                    sh "mvn sonar:sonar"
-                } catch(error){
-                    echo "The sonar server could not be reached ${error}"
-                }
-            }
-        }
+    stage('Run App'){
+        runApp(CONTAINER_NAME, CONTAINER_TAG, DOCKER_HUB_USER, HTTP_PORT)
+    }*/
 
-        /*stage("Image Prune"){
-            imagePrune(CONTAINER_NAME)
-        }*/
-
-        /*stage('Image Build'){
-            imageBuild(CONTAINER_NAME, CONTAINER_TAG)
-        }
-
-        stage('Run App'){
-            runApp(CONTAINER_NAME, CONTAINER_TAG, DOCKER_HUB_USER, HTTP_PORT)
-        }*/
-
-        stage('Docker-compose'){
-            steps{
-                try {
-                    sh "docker-compose up"
-                }catch(error){}
-            }
+    stage('Docker-compose'){
+        steps{
+            try {
+                sh "docker-compose up"
+            }catch(error){}
         }
     }
 }
