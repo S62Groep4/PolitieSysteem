@@ -2,9 +2,10 @@ version: '3.5'
 
 services:
   mysql:
-    image: mysql/mysql-server:5.7.21
+    #image: mysql/mysql-server:5.7.21
+    build: .
     volumes:
-      - /opt/mysql_data:/var/lib/mysql
+      - /opt/politiesysteem/mysql_data:/var/lib/mysql
     ports:
       - "3307:3306"
     environment:
@@ -16,6 +17,7 @@ services:
     image: payara/server-full:181
     volumes:
       - /usr/share/java/sqlconnector/:/glassfish/domains/domain1
+      - ./target/politie
     ports:
       - "8081:8080"
       - "4849:4848"
