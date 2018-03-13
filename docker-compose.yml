@@ -19,7 +19,7 @@ services:
       - /usr/share/java/sqlconnector/:/glassfish/domains/domain1
       - ./target/politie
     ports:
-      - "8081:8080"
+      - "8088:8080"
       - "4849:4848"
     links:
       - mysql:mysql
