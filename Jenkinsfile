@@ -31,6 +31,9 @@ node {
             sh "sudo docker-compose down"
         }catch(error){}
         try {
+            sh "sudo docker-compose down"
+        }catch(error){}
+        try {
             sh "sudo docker-compose up -d"
         }catch(error){}
     }
