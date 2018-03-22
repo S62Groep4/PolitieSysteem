@@ -14,7 +14,6 @@ services:
 
   payara:
     build: .
-    dockerfile: Dockerfile
     ports:
       - "8080:8080"
       - "4848:4848"
