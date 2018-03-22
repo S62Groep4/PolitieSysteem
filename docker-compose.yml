@@ -13,7 +13,7 @@ services:
       - MYSQL_PASSWORD=ptt
 
   payara:
-    image: payara/server-full:181
+    build: .
     dockerfile: Dockerfile
     ports:
       - "8080:8080"
