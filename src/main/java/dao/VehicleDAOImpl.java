@@ -10,6 +10,7 @@ import javax.persistence.PersistenceException;
 @Stateless
 public class VehicleDAOImpl implements VehicleDAO{
 
+    
     @PersistenceContext(name = "politieSysteemPU")
     EntityManager em;
     
