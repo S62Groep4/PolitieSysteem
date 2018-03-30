@@ -11,12 +11,12 @@ import javax.persistence.PersistenceException;
 public class VehicleDAOImpl implements VehicleDAO{
 
     
-    @PersistenceContext(name = "politieSysteemPU")
+    @PersistenceContext(name = "PolitiePU")
     EntityManager em;
     
     @Override
     public List<Vehicle> getVehicle(String hashedLicenceplate) throws PersistenceException {
-        return em.createNamedQuery("Vehicle.findByLicenseplate").setParameter("license", hashedLicenceplate).getResultList();
+        return em.createNamedQuery("Vehicle.findByLicenseplate").setParameter("hashedLicensePlate", hashedLicenceplate).getResultList();
     }
 
     @Override
