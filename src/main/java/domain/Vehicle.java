@@ -10,12 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-@NamedQueries({@NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v"),
-               @NamedQuery(name = "Vehicle.findByLicenseplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicensePlate")
-})
+/**
+ *
+ * @author Teun
+ */
 @Entity
-public class Vehicle implements IVehicle, Serializable{
-    
+@NamedQueries({
+    @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v")
+    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate")})
+public class Vehicle implements IVehicle, Serializable {
+
     @Id
     private String hashedLicencePlate;
     private final List<IJourney> journeys = new ArrayList<>();
@@ -56,7 +60,7 @@ public class Vehicle implements IVehicle, Serializable{
         }
         return false;
     }
-    
+
     public boolean addJourney(List<IJourney> j) {
         if (j != null) {
             journeys.addAll(j);
@@ -64,15 +68,15 @@ public class Vehicle implements IVehicle, Serializable{
         }
         return false;
     }
-    
-     public boolean addInvoice(ISubInvoice i) {
+
+    public boolean addInvoice(ISubInvoice i) {
         if (i != null) {
             subInvoices.add(i);
             return true;
         }
         return false;
     }
-    
+
     public boolean addInvoice(List<ISubInvoice> i) {
         if (i != null) {
             subInvoices.addAll(i);
@@ -101,5 +105,4 @@ public class Vehicle implements IVehicle, Serializable{
         hash = 83 * hash + Objects.hashCode(this.subInvoices);
         return hash;
     }
-
 }
