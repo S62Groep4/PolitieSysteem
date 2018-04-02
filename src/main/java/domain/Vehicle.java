@@ -17,11 +17,11 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v")
-    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate = :hashedLicencePlate")})
+    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicensePlate = :hashedPlate")})
 public class Vehicle implements IVehicle, Serializable {
 
     @Id
-    private String hashedLicencePlate;
+    private String hashedLicensePlate;
     private final List<IJourney> journeys = new ArrayList<>();
     private final List<ISubInvoice> subInvoices = new ArrayList<>();
 
@@ -29,17 +29,17 @@ public class Vehicle implements IVehicle, Serializable {
     }
 
     public Vehicle(String hashedLicencePlate) {
-        this.hashedLicencePlate = hashedLicencePlate;
+        this.hashedLicensePlate = hashedLicencePlate;
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
     @Override
     public String getHashedLicensePlate() {
-        return hashedLicencePlate;
+        return hashedLicensePlate;
     }
 
     public void setHashedLicencePlate(String hashedLicencePlate) {
-        this.hashedLicencePlate = hashedLicencePlate;
+        this.hashedLicensePlate = hashedLicencePlate;
     }
 
     @Override
@@ -91,16 +91,16 @@ public class Vehicle implements IVehicle, Serializable {
             return false;
         }
         Vehicle otherUser = (Vehicle) obj;
-        if (this.hashedLicencePlate == null || otherUser.hashedLicencePlate == null) {
+        if (this.hashedLicensePlate == null || otherUser.hashedLicensePlate == null) {
             return false;
         }
-        return this.hashedLicencePlate.equals(otherUser.hashedLicencePlate);
+        return this.hashedLicensePlate.equals(otherUser.hashedLicensePlate);
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 83 * hash + Objects.hashCode(this.hashedLicencePlate);
+        hash = 83 * hash + Objects.hashCode(this.hashedLicensePlate);
         hash = 83 * hash + Objects.hashCode(this.journeys);
         hash = 83 * hash + Objects.hashCode(this.subInvoices);
         return hash;

@@ -1,6 +1,7 @@
 package service;
 
 import domain.Journey;
+import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
 import javax.annotation.PostConstruct;
@@ -49,11 +50,17 @@ public class Init {
         jou2.addTransLocation(loc6);
         jou2.addTransLocation(loc7);
         
-        Vehicle vehicle1 = new Vehicle(BCrypt.hashpw("ZX-42-NG4", BCrypt.gensalt(logRounds)));
-        vehicle1.addJourney(jou1);
-        Vehicle vehicle2 = new Vehicle(BCrypt.hashpw("RN-R34-Z7", BCrypt.gensalt(logRounds)));
-        vehicle2.addJourney(jou2);
-        Vehicle vehicle3 = new Vehicle(BCrypt.hashpw("EF-23F-2S", BCrypt.gensalt(logRounds)));
+        Vehicle veh1 = new Vehicle(BCrypt.hashpw("68JFSF", BCrypt.gensalt(12)));
+        veh1.addJourney(jou1);
+
+        Vehicle veh2 = new Vehicle(BCrypt.hashpw("54HSHS", BCrypt.gensalt(12)));
+        veh2.addJourney(jou2);
+        
+        SubInvoice inv1 = new SubInvoice("1", "31", 165.00);
+        veh1.addInvoice(inv1);
+        
+        SubInvoice inv2 = new SubInvoice("2", "31", 486.00);
+        veh2.addInvoice(inv2);
         
         transLocationService.insertTransLocation(loc1);
         transLocationService.insertTransLocation(loc2);
@@ -63,12 +70,15 @@ public class Init {
         transLocationService.insertTransLocation(loc6);
         transLocationService.insertTransLocation(loc7);
         
+        
         journeyService.insertJourney(jou1);
         journeyService.insertJourney(jou2);
         
-        vehicleService.insertVehicle(vehicle1);
-        vehicleService.insertVehicle(vehicle2);
-        vehicleService.insertVehicle(vehicle3);
+        vehicleService.insertVehicle(veh1);
+        vehicleService.insertVehicle(veh2);
+        
+        subInvoiceService.insertSubInvoice(inv1);
+        subInvoiceService.insertSubInvoice(inv2);
     }
 
 }

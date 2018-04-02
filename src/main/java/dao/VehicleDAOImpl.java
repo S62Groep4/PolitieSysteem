@@ -16,7 +16,7 @@ public class VehicleDAOImpl implements VehicleDAO{
     
     @Override
     public List<Vehicle> getVehicle(String hashedLicenceplate) throws PersistenceException {
-        return em.createNamedQuery("Vehicle.findByLicenseplate").setParameter("hashedLicensePlate", hashedLicenceplate).getResultList();
+        return em.createNamedQuery("Vehicle.findByLicenceplate").setParameter("hashedPlate", hashedLicenceplate).getResultList();
     }
 
     @Override
