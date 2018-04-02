@@ -55,9 +55,20 @@ public class Init {
         vehicle2.addJourney(jou2);
         Vehicle vehicle3 = new Vehicle(BCrypt.hashpw("EF-23F-2S", BCrypt.gensalt(logRounds)));
         
-        //vehicleService.insertVehicle(vehicle1);
-        //vehicleService.insertVehicle(vehicle2);
-        //vehicleService.insertVehicle(vehicle3);
+        transLocationService.insertTransLocation(loc1);
+        transLocationService.insertTransLocation(loc2);
+        transLocationService.insertTransLocation(loc3);
+        transLocationService.insertTransLocation(loc4);
+        transLocationService.insertTransLocation(loc5);
+        transLocationService.insertTransLocation(loc6);
+        transLocationService.insertTransLocation(loc7);
+        
+        journeyService.insertJourney(jou1);
+        journeyService.insertJourney(jou2);
+        
+        vehicleService.insertVehicle(vehicle1);
+        vehicleService.insertVehicle(vehicle2);
+        vehicleService.insertVehicle(vehicle3);
     }
 
 }
