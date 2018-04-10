@@ -2,9 +2,10 @@ package dao;
 
 import domain.User;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 
-
+@Stateless
 public class UserDAOImpl implements UserDAO{
 
     //PersistenceContext
