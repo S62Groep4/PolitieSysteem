@@ -10,19 +10,22 @@ import { LoginComponent } from './login/login.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthGuardService } from './auth-guard.service';
 
 const appRoutes: Routes = [
   {
-    path: '',
-    component: HomeComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'register',
-    component: RegistrationComponent
+    component: RegistrationComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: '',
+    component: LoginComponent
   },
   {
     path: '',

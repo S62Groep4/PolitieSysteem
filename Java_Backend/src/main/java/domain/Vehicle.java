@@ -8,7 +8,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @NamedQueries({@NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v"),
-               @NamedQuery(name = "Vehicle.findByLicenseplate", query = "SELECT v FROM Vehicle v WHERE hashedLicensePlate = :licensePlate")
+               @NamedQuery(name = "Vehicle.findByLicenseplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicensePlate = :licensePlate")
 })
 @Entity
 public class Vehicle implements IVehicle{

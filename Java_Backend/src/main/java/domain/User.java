@@ -47,6 +47,10 @@ public class User {
     }
     // </editor-fold>
     
+    public User(){
+        
+    }
+    
     public User(String email, String password){
         this.email = email;
         this.password = BCrypt.hashpw(password, salt);
