@@ -36,6 +36,8 @@ public class LoginService {
         
         try{
             alg = Algorithm.HMAC512("proftaak");
+            //TODO; Expire date
+            //Token over multiple applications
             token = JWT.create().withSubject(loginEmail).withIssuer("PolitieSysteem").sign(alg);
         }catch(UnsupportedEncodingException ex){
             ex.printStackTrace();
