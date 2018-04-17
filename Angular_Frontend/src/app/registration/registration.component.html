@@ -5,6 +5,14 @@
     <title>{{title}}</title>
 </head>
 <body>
-
+  <div class="container-fluid col-md-6 text-center">
+    <h2>Fügen Sie ein Kennzeichen zur Datenbank hinzu</h2>
+    <form name="form" (ngSubmit)="f.form.valid && registerLicenseplate()" #f="ngForm" novalidate>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !licenseplate.valid }">
+        <label for="licenseplate">Nummernschild</label>
+        <input type="text" class="form-control" id="licenseplate" name="licenseplate" [(ngModel)]="model.licenseplate" #licenseplate="ngModel" required />
+      </div>
+    </form>
+  </div>
 </body>
 </html>

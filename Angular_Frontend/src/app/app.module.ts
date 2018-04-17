@@ -9,6 +9,9 @@ import {RegistrationComponent} from './registration/registration.component.';
 import {LoginComponent} from './login/login.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {VehicleService} from './vehicle.service';
+import {HttpClientModule} from '@angular/common/http';
 
 const appRoutes: Routes = [
   {
@@ -38,7 +41,10 @@ const appRoutes: Routes = [
     RegistrationComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule.forRoot(),
     RouterModule.forRoot(
       appRoutes, {
@@ -47,9 +53,7 @@ const appRoutes: Routes = [
     )
   ],
   providers: [
-    {
-      provide: LocationStrategy, useClass: HashLocationStrategy
-    }
+    VehicleService
   ],
   bootstrap: [AppComponent]
 })
