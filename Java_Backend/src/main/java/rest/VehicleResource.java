@@ -16,7 +16,7 @@ import javax.ws.rs.core.MediaType;
 import service.VehicleService;
 
 @Stateless
-@Path("Vehicle")
+@Path("vehicles")
 public class VehicleResource {
 
     @Inject
@@ -48,7 +48,6 @@ public class VehicleResource {
     }
 
     @GET
-    @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Vehicle> getAllVehicles() {
         return vehicleService.getAllVehicles();
