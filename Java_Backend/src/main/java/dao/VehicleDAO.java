@@ -1,7 +1,5 @@
 package dao;
 
-import domain.IJourney;
-import domain.ISubInvoice;
 import domain.Vehicle;
 import java.util.List;
 import javax.persistence.PersistenceException;
@@ -15,7 +13,7 @@ public interface VehicleDAO {
 
     boolean updateVehicle(Vehicle vehicle) throws PersistenceException;
 
-    boolean removeVehicle(Vehicle vehicle) throws PersistenceException;
+    boolean removeVehicle(String hashedLicenceplate) throws PersistenceException;
 
     boolean insertVehicle(Vehicle vehicle) throws PersistenceException;
 

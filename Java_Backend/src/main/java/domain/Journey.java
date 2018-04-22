@@ -16,23 +16,16 @@ import javax.persistence.NamedQuery;
  *
  * @author Teun
  */
-@Entity
-@NamedQueries({
-    @NamedQuery(name = "Journey.findAll", query = "SELECT j FROM Journey j")
-    ,@NamedQuery(name = "Journey.findById", query = "SELECT j FROM Journey j WHERE j.id = :id")})
-public class Journey implements IJourney, Serializable {
+public class Journey implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private final List<ITransLocation> locations = new ArrayList<>();
+    private final List<TransLocation> locations = new ArrayList<>();
 
     public Journey() {
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    @Override
-    public List<ITransLocation> getTransLocations() {
+    public List<TransLocation> getTransLocations() {
         return Collections.unmodifiableList(locations);
     }
 
@@ -41,7 +34,7 @@ public class Journey implements IJourney, Serializable {
     }
     // </editor-fold>
 
-    public boolean addTransLocation(ITransLocation loc) {
+    public boolean addTransLocation(TransLocation loc) {
         if (loc != null) {
             locations.add(loc);
             return true;
@@ -49,7 +42,7 @@ public class Journey implements IJourney, Serializable {
         return false;
     }
 
-    public boolean addTransLocation(List<ITransLocation> loc) {
+    public boolean addTransLocation(List<TransLocation> loc) {
         if (loc != null) {
             locations.addAll(loc);
             return true;
