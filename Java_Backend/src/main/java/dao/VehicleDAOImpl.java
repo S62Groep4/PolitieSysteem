@@ -11,7 +11,7 @@ import javax.persistence.PersistenceException;
 public class VehicleDAOImpl implements VehicleDAO{
 
     
-    @PersistenceContext(name = "politieSysteemPU")
+    @PersistenceContext
     EntityManager em;
     
     @Override

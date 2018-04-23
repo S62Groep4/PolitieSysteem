@@ -16,6 +16,8 @@ public class LoginService {
     UserDAO userDAO;
     
     public boolean verifyLogin(String email, String password){
+        System.out.println("Password : " + password);
+        
         User user = userDAO.getUserByEmail(email).get(0);
         
         //Check if there is any result at all
@@ -23,7 +25,7 @@ public class LoginService {
             return false;
         }
         //Check if the email is the same as the set email and check if the password is correct.
-        if(user.getEmail().equals(email) && checkPassword(password, user.getPassword()) == true){
+        if(checkPassword(password, user.getPassword())){
             //Credentials are correct
             return true;
         }
@@ -49,7 +51,7 @@ public class LoginService {
     private boolean checkPassword(String password, String hashedPassword){
         boolean state;
         
-        if(hashedPassword == null || hashedPassword.startsWith("$2a$")){
+        if(hashedPassword == null || !hashedPassword.startsWith("$2a$")){
             return false;
         }
         

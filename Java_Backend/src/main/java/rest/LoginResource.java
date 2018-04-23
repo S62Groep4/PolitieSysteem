@@ -23,6 +23,7 @@ public class LoginResource {
     
     @POST
     public Response login(User user){
+        System.out.println(user.getEmail());
         boolean valid = loginService.verifyLogin(user.getEmail(), user.getPassword());
         
         if(valid == true){
