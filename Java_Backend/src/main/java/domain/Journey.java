@@ -15,24 +15,39 @@ import javax.persistence.Id;
  * @author Teun
  */
 @Entity
-public class Journey implements IJourney, Serializable {
+public class Journey implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
-    private final List<ITransLocation> locations = new ArrayList<>();
+    private final List<TransLocation> locations = new ArrayList<>();
 
     public Journey() {
     }
 
-    @Override
-    public List<ITransLocation> getTransLocations() {
+    public long getId() {
+        return id;
+    }
+    
+    public List<TransLocation> getTransLocations() {
         return Collections.unmodifiableList(locations);
     }
 
-    public long getId() {
-        return id;
+    // </editor-fold>
+
+    public boolean addTransLocation(TransLocation loc) {
+        if (loc != null) {
+            locations.add(loc);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addTransLocation(List<TransLocation> loc) {
+        if (loc != null) {
+            locations.addAll(loc);
+            return true;
+        }
+        return false;
     }
 
     @Override

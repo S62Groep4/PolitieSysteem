@@ -1,5 +1,6 @@
 package dao;
 
+import domain.SubInvoice;
 import domain.Vehicle;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,7 +17,8 @@ public class VehicleDAOImpl implements VehicleDAO{
     
     @Override
     public List<Vehicle> getVehicle(String hashedLicenceplate) throws PersistenceException {
-        return em.createNamedQuery("Vehicle.findByLicenseplate").setParameter("license", hashedLicenceplate).getResultList();
+        return em.createNamedQuery("Vehicle.findByLicenceplate")
+                .setParameter("hashedLicencePlate", "%" + hashedLicenceplate + "%").getResultList();
     }
 
     @Override
@@ -24,7 +26,6 @@ public class VehicleDAOImpl implements VehicleDAO{
         return em.createNamedQuery("Vehicle.findAll").getResultList();
     }
 
-    //NOTE returning a bool here is not needed
     @Override
     public boolean updateVehicle(Vehicle vehicle) throws PersistenceException {
         em.merge(vehicle);
@@ -32,9 +33,18 @@ public class VehicleDAOImpl implements VehicleDAO{
     }
 
     @Override
-    public boolean removeVehicle(Vehicle vehicle) throws PersistenceException {
-        Vehicle managedVehicle = em.find(Vehicle.class, vehicle.getHashedLicensePlate());
-        em.remove(managedVehicle);
+    public boolean removeVehicle(String hashedLicenceplate) throws PersistenceException {
+        Vehicle temp = em.find(Vehicle.class, hashedLicenceplate);
+
+        for (Integer j : temp.getJourneys()) {
+            em.remove(j);
+        }
+
+        for (SubInvoice si : temp.getSubInvoices()) {
+            em.remove(si);
+        }
+
+        em.remove(temp);
         return true;
     }
 

@@ -5,13 +5,18 @@ import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author Teun
  */
 @Entity
-public class SubInvoice implements ISubInvoice, Serializable {
+@NamedQueries({
+    @NamedQuery(name = "SubInvoice.findAll", query = "SELECT s FROM SubInvoice s"),
+    @NamedQuery(name = "SubInvoice.findByInvoiceNumber", query = "SELECT s FROM SubInvoice s WHERE s.invoiceNumber = :invoiceNumber")})
+public class SubInvoice implements Serializable {
 
     @Id
     private String invoiceNumber;
@@ -31,27 +36,24 @@ public class SubInvoice implements ISubInvoice, Serializable {
         this.invoiceDate = new Date(System.currentTimeMillis()).toString();
     }
 
-    @Override
+
+    // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
     public String getInvoiceNumber() {
         return invoiceNumber;
     }
 
-    @Override
     public String getCountry() {
         return country;
     }
 
-    @Override
     public boolean getPaymentStatus() {
         return isPayed;
     }
 
-    @Override
     public String getInvoiceDate() {
         return invoiceDate;
     }
 
-    @Override
     public double getPrice() {
         return price;
     }
