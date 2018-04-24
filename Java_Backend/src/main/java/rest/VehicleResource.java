@@ -31,15 +31,15 @@ public class VehicleResource {
     }
 
     @DELETE
-    @Path("{hashedLicencePlate}")
-    public void removeVehicle(@PathParam("hashedLicencePlate") String hashedLicencePlate) {
-        vehicleService.removeVehicle(hashedLicencePlate);
+    @Path("{licencePlate}")
+    public void removeVehicle(@PathParam("licencePlate") String licencePlate) {
+        vehicleService.removeVehicle(licencePlate);
     }
 
     @GET
-    @Path("{hashedLicencePlate}")
-    public List<Vehicle> getVehicle(@PathParam("hashedLicencePlate") String hashedLicencePlate) {
-        return vehicleService.getVehicle(hashedLicencePlate);
+    @Path("{licencePlate}")
+    public List<Vehicle> getVehicle(@PathParam("licencePlate") String licencePlate) {
+        return vehicleService.getVehicle(licencePlate);
     }
 
     @GET

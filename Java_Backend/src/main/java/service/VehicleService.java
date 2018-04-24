@@ -21,9 +21,9 @@ public class VehicleService {
     public VehicleService() {
     }
 
-    public List<Vehicle> getVehicle(String hashedLicenceplate) throws PersistenceException {
+    public List<Vehicle> getVehicle(String licencePlate) throws PersistenceException {
         try {
-            return vehicleDao.getVehicle(hashedLicenceplate);
+            return vehicleDao.getVehicle(licencePlate);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getVehicle operation; {0}", pe.getMessage());
             return null;
@@ -48,9 +48,9 @@ public class VehicleService {
         }
     }
 
-    public boolean removeVehicle(String hashedLicenceplate) throws PersistenceException {
+    public boolean removeVehicle(String licencePlate) throws PersistenceException {
         try {
-            return vehicleDao.removeVehicle(hashedLicenceplate);
+            return vehicleDao.removeVehicle(licencePlate);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeVehicle operation; {0}", pe.getMessage());
             return false;

@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 public class VehicleDTO implements Serializable {
 
+    private String licencePlate;
     private String hashedLicencePlate;
     private String journeyUrl;
     private int journeys;
@@ -22,12 +23,21 @@ public class VehicleDTO implements Serializable {
     public VehicleDTO() {
     }
 
-    public VehicleDTO(String hashedLicencePlate, String journeyUrl, int journeys, String subInvoiceUrl, int subInvoices) {
+    public VehicleDTO(String licencePlate, String hashedLicencePlate, String journeyUrl, int journeys, String subInvoiceUrl, int subInvoices) {
+        this.licencePlate = licencePlate;
         this.hashedLicencePlate = hashedLicencePlate;
         this.journeyUrl = journeyUrl;
         this.journeys = journeys;
         this.subInvoiceUrl = subInvoiceUrl;
         this.subInvoices = subInvoices;
+    }
+
+    public String getLicencePlate(String licencePlate) {
+        return this.licencePlate;
+    }
+
+    public void setLicencePlate(String licencePlate) {
+        this.licencePlate = licencePlate;
     }
 
     public String getHashedLicencePlate() {

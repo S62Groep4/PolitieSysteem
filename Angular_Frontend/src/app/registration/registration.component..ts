@@ -31,7 +31,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   insertVehicle() {
-    this.vehicleService.insertVehicle(this.model.hashedLicencePlate)
+    this.vehicleService.insertVehicle(this.model.licencePlate)
       .subscribe(vehicle => {
         this.reloadPage();
       });

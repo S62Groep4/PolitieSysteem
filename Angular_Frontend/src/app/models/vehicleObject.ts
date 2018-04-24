@@ -1,6 +1,7 @@
 import {SubInvoice} from './subinvoiceObject';
 
 export class Vehicle {
+  public licencePlate: String
   public hashedLicencePlate: String;
   public journeyUrl: String;
   public journeys: Number;
@@ -8,12 +9,21 @@ export class Vehicle {
   public subInvoices: SubInvoice[];
 
 
-  constructor(hashedLicencePlate: String, journeyUrl: String, journeys: Number, subInvoiceUrl: String, subInvoices: SubInvoice[]) {
+  constructor(licencePlate: String, hashedLicencePlate: String, journeyUrl: String, journeys: Number, subInvoiceUrl: String, subInvoices: SubInvoice[]) {
+    this.licencePlate = licencePlate;
     this.hashedLicencePlate = hashedLicencePlate;
     this.journeyUrl = journeyUrl;
     this.journeys = journeys;
     this.subInvoiceUrl = subInvoiceUrl;
     this.subInvoices = subInvoices;
+  }
+
+  setLicencePlate(licencePlate: String) {
+    this.licencePlate = licencePlate;
+  }
+
+  getLicencePlate() {
+    return this.licencePlate;
   }
 
   setHashedLicenseplate(hashedLicencePlate: String) {

@@ -20,7 +20,7 @@ export class VehicleService {
   }
 
   insertVehicle(vehicle: String): Observable<any> {
-    const newVehicle = new RegisterLicensePlateDTO(vehicle);
+    const newVehicle = new RegisterLicensePlateDTO(vehicle, vehicle);
     const header = {headers: new HttpHeaders({'Content-type': 'application/json'})};
     return this.http.post('http://localhost:44760/Java_Backend/api/vehicles', newVehicle, header);
   }
