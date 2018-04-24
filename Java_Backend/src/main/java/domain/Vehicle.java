@@ -17,10 +17,11 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v")
-    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate LIKE :hashedLicencePlate")})
+    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.licencePlate LIKE :licencePlate")})
 public class Vehicle implements Serializable {
 
     @Id
+    private String licencePlate;
     private String hashedLicencePlate;
     private final List<Integer> journeys = new ArrayList<>();
     private final List<SubInvoice> subInvoices = new ArrayList<>();
@@ -28,11 +29,20 @@ public class Vehicle implements Serializable {
     public Vehicle() {
     }
 
-    public Vehicle(String hashedLicencePlate) {
+    public Vehicle(String licencePlate, String hashedLicencePlate) {
+        this.licencePlate = licencePlate;
         this.hashedLicencePlate = hashedLicencePlate;
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
+    public String getLicencePlate() {
+        return this.licencePlate;
+    }
+
+    public void setLicencePlate(String licenceplate) {
+        this.licencePlate = licenceplate;
+    }
+
     public String getHashedLicencePlate() {
         return hashedLicencePlate;
     }
@@ -51,13 +61,13 @@ public class Vehicle implements Serializable {
     // </editor-fold>
 
     public boolean addJourney(int j) {
-            journeys.add(j);
-            return true;
+        journeys.add(j);
+        return true;
     }
 
     public boolean addJourney(List<Integer> j) {
-            journeys.addAll(j);
-            return true;
+        journeys.addAll(j);
+        return true;
     }
 
     public boolean addInvoice(SubInvoice i) {

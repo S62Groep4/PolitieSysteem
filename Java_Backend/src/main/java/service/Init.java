@@ -40,10 +40,10 @@ public class Init {
         TransLocation loc6 = new TransLocation(48.014012, 11.139631, "188656", "31",journey2);
         TransLocation loc7 = new TransLocation(48.028709, 10.985823, "188657", "31",journey2);
 
-        Vehicle veh1 = new Vehicle(BCrypt.hashpw("68JFSF", BCrypt.gensalt(12)));
+        Vehicle veh1 = new Vehicle("68JFSF", BCrypt.hashpw("68JFSF", BCrypt.gensalt(12)));
         veh1.addJourney(journey1);
 
-        Vehicle veh2 = new Vehicle(BCrypt.hashpw("54HSHS", BCrypt.gensalt(12)));
+        Vehicle veh2 = new Vehicle("54HSHS", BCrypt.hashpw("54HSHS", BCrypt.gensalt(12)));
         veh2.addJourney(journey2);
 
         SubInvoice inv1 = new SubInvoice("1", "31", 165.00);
