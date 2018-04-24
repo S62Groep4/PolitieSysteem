@@ -1,8 +1,9 @@
 package service;
 
 import dao.VehicleDAO;
+import domain.Journey;
+import domain.SubInvoice;
 import domain.Vehicle;
-import dto.RegisterLicencePlateDTO;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,6 +11,10 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
 
+/**
+ *
+ * @author Teun
+ */
 @Stateless
 public class VehicleService {
 
@@ -21,11 +26,29 @@ public class VehicleService {
     public VehicleService() {
     }
 
-    public List<Vehicle> getVehicle(String licencePlate) throws PersistenceException {
+    public List<Vehicle> getVehicle(String hashedLicenceplate) throws PersistenceException {
         try {
-            return vehicleDao.getVehicle(licencePlate);
+            return vehicleDao.getVehicle(hashedLicenceplate);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getVehicle operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+    
+    public List<SubInvoice> getVehicleInvoices(String hashedLicenceplate) throws PersistenceException {
+        try {
+            return vehicleDao.getVehicleInvoices(hashedLicenceplate);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getVehicleInvoices operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+    
+    public List<Journey> getVehicleJourneys(String hashedLicenceplate) throws PersistenceException {
+        try {
+            return vehicleDao.getVehicleJourneys(hashedLicenceplate);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getVehicleJourneys operation; {0}", pe.getMessage());
             return null;
         }
     }
@@ -39,30 +62,29 @@ public class VehicleService {
         }
     }
 
-    public boolean updateVehicle(Vehicle vehicle) throws PersistenceException {
+    public Vehicle updateVehicle(Vehicle vehicle) throws PersistenceException {
         try {
             return vehicleDao.updateVehicle(vehicle);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing updateVehicle operation; {0}", pe.getMessage());
-            return false;
+            return null;
         }
     }
 
-    public boolean removeVehicle(String licencePlate) throws PersistenceException {
+    public void removeVehicle(String hashedLicenceplate) throws PersistenceException {
         try {
-            return vehicleDao.removeVehicle(licencePlate);
+            vehicleDao.removeVehicle(hashedLicenceplate);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeVehicle operation; {0}", pe.getMessage());
-            return false;
         }
     }
 
-    public boolean insertVehicle(Vehicle vehicle) throws PersistenceException {
+    public Vehicle insertVehicle(Vehicle vehicle) throws PersistenceException {
         try {
             return vehicleDao.insertVehicle(vehicle);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertVehicle operation; {0}", pe.getMessage());
-            return false;
+            return null;
         }
     }
 }

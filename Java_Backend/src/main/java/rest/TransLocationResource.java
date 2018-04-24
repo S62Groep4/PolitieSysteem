@@ -1,6 +1,5 @@
 package rest;
 
-import domain.Journey;
 import domain.TransLocation;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -22,19 +21,21 @@ import service.TransLocationService;
  */
 @Stateless
 @Path("translocations")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class TransLocationResource {
 
     @Inject
     TransLocationService transLocationService;
 
     @POST
-    public void insertTransLocation(TransLocation location) {
-        transLocationService.insertTransLocation(location);
+    public TransLocation insertTransLocation(TransLocation location) {
+        return transLocationService.insertTransLocation(location);
     }
 
     @PUT
-    public void updateJourney(TransLocation location) {
-        transLocationService.updateTransLocation(location);
+    public TransLocation updateJourney(TransLocation location) {
+        return transLocationService.updateTransLocation(location);
     }
 
     @DELETE
@@ -47,6 +48,12 @@ public class TransLocationResource {
     @Path("{serialNumber}")
     public TransLocation getJourney(@PathParam("serialNumber") String serialNumber) {
         return transLocationService.getTransLocation(serialNumber);
+    }
+
+    @GET
+    @Path("journeyid/{journeyId}")
+    public List<TransLocation> getAllTransLocationsByJourney(@PathParam("journeyId") long id) {
+        return transLocationService.getAllTransLocationsByJourney(id);
     }
 
     @GET

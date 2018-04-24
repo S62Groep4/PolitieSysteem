@@ -14,7 +14,7 @@ import javax.persistence.PersistenceException;
 @Stateless
 public class TransLocationDAOImpl implements TransLocationDAO {
 
-    @PersistenceContext(name = "politiePU")
+    @PersistenceContext(name = "ptt_test")
     EntityManager em;
 
     @Override
@@ -28,20 +28,23 @@ public class TransLocationDAOImpl implements TransLocationDAO {
     }
 
     @Override
-    public boolean updateTransLocation(TransLocation location) throws PersistenceException {
-        em.merge(location);
-        return true;
+    public List<TransLocation> getAllTransLocationsByJourney(long id) throws PersistenceException {
+        return em.createNamedQuery("TransLocation.findByJourneyId").setParameter("journeyId", id).getResultList();
     }
 
     @Override
-    public boolean removeTransLocation(String serialNumber) throws PersistenceException {
+    public TransLocation updateTransLocation(TransLocation location) throws PersistenceException {
+        return em.merge(location);
+    }
+
+    @Override
+    public void removeTransLocation(String serialNumber) throws PersistenceException {
         em.remove(em.find(TransLocation.class, serialNumber));
-        return true;
     }
 
     @Override
-    public boolean insertTransLocation(TransLocation location) throws PersistenceException {
+    public TransLocation insertTransLocation(TransLocation location) throws PersistenceException {
         em.persist(location);
-        return true;
+        return location;
     }
 }

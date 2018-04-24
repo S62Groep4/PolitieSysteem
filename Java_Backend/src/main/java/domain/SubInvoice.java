@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -14,16 +15,18 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "SubInvoice.findAll", query = "SELECT s FROM SubInvoice s"),
-    @NamedQuery(name = "SubInvoice.findByInvoiceNumber", query = "SELECT s FROM SubInvoice s WHERE s.invoiceNumber = :invoiceNumber")})
+    @NamedQuery(name = "SubInvoice.findAll", query = "SELECT s FROM SubInvoice s")
+    ,@NamedQuery(name = "SubInvoice.findByInvoiceNumber", query = "SELECT s FROM SubInvoice s WHERE s.invoiceNumber = :invoiceNumber")})
 public class SubInvoice implements Serializable {
 
     @Id
     private String invoiceNumber;
     private String country;
-    private boolean isPayed;
+    private String paymentStatus;
     private String invoiceDate;
     private double price;
+    @ManyToOne
+    private Vehicle vehicle;
 
     public SubInvoice() {
     }
@@ -32,22 +35,40 @@ public class SubInvoice implements Serializable {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
         this.price = price;
-        this.isPayed = false;
         this.invoiceDate = new Date(System.currentTimeMillis()).toString();
     }
 
+    public SubInvoice(String invoiceNumber, String country, double price, String invoiceDate, String paymentStatus) {
+        this.invoiceNumber = invoiceNumber;
+        this.country = country;
+        this.price = price;
+        this.paymentStatus = paymentStatus;
+        this.invoiceDate = invoiceDate;
+    }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
     public String getInvoiceNumber() {
         return invoiceNumber;
     }
 
     public String getCountry() {
         return country;
-    }
-
-    public boolean getPaymentStatus() {
-        return isPayed;
     }
 
     public String getInvoiceDate() {
@@ -57,6 +78,7 @@ public class SubInvoice implements Serializable {
     public double getPrice() {
         return price;
     }
+    // </editor-fold>
 
     @Override
     public boolean equals(Object obj) {
@@ -73,11 +95,12 @@ public class SubInvoice implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 66 * hash + Objects.hashCode(this.invoiceNumber);
-        hash = 66 * hash + Objects.hashCode(this.country);
-        hash = 66 * hash + Objects.hashCode(this.isPayed);
-        hash = 66 * hash + Objects.hashCode(this.invoiceDate);
-        hash = 66 * hash + Objects.hashCode(this.price);
+        hash = 97 * hash + Objects.hashCode(this.invoiceNumber);
+        hash = 97 * hash + Objects.hashCode(this.country);
+        hash = 97 * hash + Objects.hashCode(this.paymentStatus);
+        hash = 97 * hash + Objects.hashCode(this.invoiceDate);
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
+        hash = 97 * hash + Objects.hashCode(this.vehicle);
         return hash;
     }
 }

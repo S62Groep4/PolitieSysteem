@@ -1,66 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>{{title}}</title>
 </head>
+
 <body>
-<div class="container-fluid col-md-6 text-center">
-  <h2>Fügen Sie ein Kennzeichen zur Datenbank hinzu</h2>
-  <form name="form" (ngSubmit)="f.form.valid && insertVehicle()" #f="ngForm" novalidate>
-    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !licencePlate.valid }">
-      <label for="licencePlate">Nummernschild</label>
-      <input type="text" class="form-control" id="licencePlate" name="licencePlate" required minlength="3"
-             placeholder="nummernschild..." [(ngModel)]="model.licencePlate" #licencePlate="ngModel"
-             required/>
-      <div *ngIf="licencePlate.invalid" class="alert alert-warning">
-        <p>Ein Nummernschild ausfüllen</p>
-      </div>
-      <button class="btn btn-danger col-md-12">Add</button>
-    </div>
-  </form>
-  <br>
-</div>
-
-<div class="container-fluid text-center col-md-6">
-  <form>
-    <div class="form-group">
-      <input #tagSearch class="form-control mr-sm-2" type="search" placeholder="Suche auf dem Nummernschild"
-             aria-label="Search" (input)="searchCarByLicensePlate($event.target.value)">
-      <br>
-    </div>
-  </form>
-</div>
-
-<div class="container text-center">
-  <div *ngIf="licencePlate.invalid" class="row justify-content-center">
-    <div *ngFor="let vehicle of searchVehicle" class="card" style="width: 18rem;">
-      <h3>Auto gefunden:</h3>
-      <div class="card-body bg-warning">
-        <i class="fas fa-car fa-7x"></i>
-        <h5 class="card-title">Vehicle</h5>
-        <p>licenceplate: {{vehicle.licencePlate}}</p>
-        <p><i class="fas fa-road fa-2x"></i> journeys: {{vehicle.journeys}}</p>
-        <!--<div *ngIf="vehicle.subInvoices.length > 0; else nosubinvoices">
-          <div *ngFor="let subinvoice of vehicle.subInvoices">
-            <p><i class="fas fa-file-alt fa-2x"></i> invoice number: {{subinvoice.invoiceNumber}} </p>
-            <p><i class="fas fa-flag fa-2x"></i> country code: {{subinvoice.country}}</p>
-            <p><i class="fas fa-euro-sign fa-2x"></i> price: {{subinvoice.price}}</p>
-          </div>
+  <div class="container-fluid col-md-6 text-center">
+    <h2>Fügen Sie ein Kennzeichen zur Datenbank hinzu</h2>
+    <form name="form" (ngSubmit)="f.form.valid && insertVehicle()" #f="ngForm" novalidate>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !licencePlate.valid }">
+        <label for="licencePlate">Nummernschild</label>
+        <input type="text" class="form-control" id="licencePlate" name="licencePlate" required minlength="3" placeholder="nummernschild..."
+          [(ngModel)]="model.licencePlate" #licencePlate="ngModel" required/>
+        <div *ngIf="licencePlate.invalid" class="alert alert-warning">
+          <p>Ein Nummernschild ausfüllen</p>
         </div>
-        <ng-template #nosubinvoices>
-          <div *ngFor="let subinvoice of vehicle.subInvoices">
-            <p><i class="fas fa-file-alt fa-2x"></i> invoice number: 0</p>
-            <p><i class="fas fa-flag fa-2x"></i> country code: 0</p>
-            <p><i class="fas fa-euro-sign fa-2x"></i> price: 0</p>
+        <button class="btn btn-danger col-md-12">Add</button>
+      </div>
+    </form>
+    <br>
+  </div>
+
+  <div class="container-fluid text-center col-md-6">
+    <form>
+      <div class="form-group">
+        <input #tagSearch class="form-control mr-sm-2" type="search" placeholder="Suche auf dem Nummernschild" aria-label="Search"
+          (input)="searchCarByLicensePlate($event.target.value)">
+        <br>
+      </div>
+    </form>
+  </div>
+
+  <!--<div class="container text-center">
+    <h3>Auto gefunden:</h3>
+    <div *ngIf="licencePlate.invalid" class="row justify-content-center">
+      <div *ngFor="let vehicle of searchVehicle" class="card" style="width: 18rem;">
+        <div class="card-body bg-warning">
+          <i class="fas fa-car fa-7x"></i>
+          <h5 class="card-title">Vehicle</h5>
+          <p>licenceplate: {{vehicle.licencePlate}}</p>
+          <p>
+            <i class="fas fa-road fa-2x"></i> journeys: {{vehicle.journeys}}</p>
+          <div *ngIf="vehicle.subInvoices.length > 0; else nosubinvoices">
+            <div *ngFor="let subinvoice of vehicle.subInvoices">
+              <p>
+                <i class="fas fa-file-alt fa-2x"></i> invoice number: {{subinvoice.invoiceNumber}} </p>
+              <p>
+                <i class="fas fa-flag fa-2x"></i> country code: {{subinvoice.country}}</p>
+              <p>
+                <i class="fas fa-euro-sign fa-2x"></i> price: {{subinvoice.price}}</p>
+            </div>
           </div>
-        </ng-template>-->
+          <ng-template #nosubinvoices>
+            <div *ngFor="let subinvoice of vehicle.subInvoices">
+              <p>
+                <i class="fas fa-file-alt fa-2x"></i> invoice number: 0</p>
+              <p>
+                <i class="fas fa-flag fa-2x"></i> country code: 0</p>
+              <p>
+                <i class="fas fa-euro-sign fa-2x"></i> price: 0</p>
+            </div>
+          </ng-template>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  </div>-->
 
-<div class="container-fluid text-center text-dark">
+  <div class="container-fluid text-center text-dark">
   <br>
   <h2>gestohlene Autos: {{vehicles.length}}</h2>
 
@@ -69,7 +77,7 @@
       <div class="card-body bg-danger">
         <i class="fas fa-car fa-7x"></i>
         <h5 class="card-title">Vehicle</h5>
-        <p>licenceplate: {{vehicle.licencePlate}}</p>
+        <p>licenceplate: {{vehicle.hashedLicencePlate}}</p>
         <p><i class="fas fa-road fa-2x"></i> journeys: {{vehicle.journeys}}</p>
         <div *ngFor="let subinvoice of vehicle.subInvoices">
           <p><i class="fas fa-file-alt fa-2x"></i> invoice number: {{subinvoice.invoiceNumber}} </p>
@@ -77,8 +85,9 @@
           <p><i class="fas fa-euro-sign fa-2x"></i> price: {{subinvoice.price}}</p>
         </div>
       </div>
+      </div>
     </div>
   </div>
-</div>
 </body>
+
 </html>

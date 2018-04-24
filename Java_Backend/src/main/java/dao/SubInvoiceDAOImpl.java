@@ -14,7 +14,7 @@ import javax.persistence.PersistenceException;
 @Stateless
 public class SubInvoiceDAOImpl implements SubInvoiceDAO {
 
-    @PersistenceContext(name = "politiePU")
+    @PersistenceContext(name = "ptt_test")
     EntityManager em;
 
     @Override
@@ -28,21 +28,19 @@ public class SubInvoiceDAOImpl implements SubInvoiceDAO {
     }
 
     @Override
-    public boolean updateSubInvoice(SubInvoice invoice) throws PersistenceException {
-        em.merge(invoice);
-        return true;
+    public SubInvoice updateSubInvoice(SubInvoice invoice) throws PersistenceException {
+        return em.merge(invoice);
     }
 
     @Override
-    public boolean removeSubInvoice(String invoiceNumber) throws PersistenceException {
+    public void removeSubInvoice(String invoiceNumber) throws PersistenceException {
         em.remove(em.find(SubInvoice.class, invoiceNumber));
-        return true;
     }
 
     @Override
-    public boolean insertSubInvoice(SubInvoice invoice) throws PersistenceException {
+    public SubInvoice insertSubInvoice(SubInvoice invoice) throws PersistenceException {
         em.persist(invoice);
-        return true;
+        return invoice;
     }
 
 }
