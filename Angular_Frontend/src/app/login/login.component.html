@@ -1,10 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/front-end-authentication
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
 </head>
+<<<<<<< HEAD
 <body>
 
 </body>
 </html>
+=======
+
+<body>
+    <div>
+        <form class="form-group" [formGroup]="form">
+            <fieldset>
+                <legend>Arbeiter anmelden</legend>
+                <div class="form-field">
+                    <label>E-Mail-Addresse:</label>
+                    <input name="email" formControlName="email">
+                </div>
+                <div class="form-field">
+                    <label>Passwort:</label>
+                    <input name="password" formControlName="password" type="password">
+                </div>
+            </fieldset>
+            <div class="form-buttons">
+                <button class="button button-primary" (click)="submitCredentials()">Login</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
+>>>>>>> feature/front-end-authentication
