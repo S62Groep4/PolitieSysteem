@@ -12,7 +12,7 @@ import javax.persistence.PersistenceException;
 public class VehicleDAOImpl implements VehicleDAO{
 
     
-    @PersistenceContext
+    @PersistenceContext(name = "politiePU")
     EntityManager em;
     
     @Override

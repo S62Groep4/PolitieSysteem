@@ -10,11 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-
+/**
+ *
+ * @author Teun
+ */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v"),
-    @NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate LIKE :hashedLicencePlate")})
+    @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v")
+    ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.hashedLicencePlate LIKE :hashedLicencePlate")})
 public class Vehicle implements Serializable {
 
     @Id

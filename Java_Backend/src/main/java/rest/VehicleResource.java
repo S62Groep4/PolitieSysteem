@@ -14,7 +14,7 @@ import javax.ws.rs.PathParam;
 import service.VehicleService;
 
 @Stateless
-@Path("vehicle")
+@Path("vehicles")
 public class VehicleResource {
 
     @Inject

@@ -15,18 +15,18 @@ export class VehicleService {
   }
 
   getVehicles(): Observable<Vehicle[]> {
-    return this.http.get('http://localhost:44760/Java_Backend/api/vehicles')
+    return this.http.get('http://localhost:8080/Java_Backend/api/vehicles')
       .map(response => response as Vehicle[]);
   }
 
   insertVehicle(vehicle: String): Observable<any> {
     const newVehicle = new RegisterLicensePlateDTO(vehicle);
     const header = {headers: new HttpHeaders({'Content-type': 'application/json'})};
-    return this.http.post('http://localhost:44760/Java_Backend/api/vehicles', newVehicle, header);
+    return this.http.post('http://localhost:8080/Java_Backend/api/vehicles', newVehicle, header);
   }
 
   searchCarByLicensePlate(licencePlate: String): Observable<Vehicle[]> {
-    return this.http.get('http://localhost:44760/Java_Backend/api/vehicles/' + licencePlate)
+    return this.http.get('http://localhost:8080/Java_Backend/api/vehicles/' + licencePlate)
       .map(response => response as Vehicle[]);
   }
 }
