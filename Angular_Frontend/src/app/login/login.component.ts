@@ -1,14 +1,10 @@
 
-<<<<<<< HEAD
-import {Component, OnInit} from '@angular/core';
-=======
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
 import { UserLogin } from '../user-login';
 import { Router } from '@angular/router';
->>>>>>> feature/front-end-authentication
 
 @Component({
   templateUrl: './login.component.html',
@@ -17,11 +13,6 @@ import { Router } from '@angular/router';
 
 export class LoginComponent implements OnInit {
   title = 'Loginseite';
-<<<<<<< HEAD
-
-  constructor() {
-
-=======
   error : string;
 
   form = new FormGroup({
@@ -30,14 +21,11 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(private auth : AuthenticationService, private router : Router) {
->>>>>>> feature/front-end-authentication
   }
 
   ngOnInit() {
 
   }
-<<<<<<< HEAD
-=======
 
   submitCredentials(){
     this.auth.login(this.form.get('email').value, this.form.get('password').value).subscribe(result => {
@@ -54,5 +42,4 @@ export class LoginComponent implements OnInit {
       }
     });
   }
->>>>>>> feature/front-end-authentication
 }

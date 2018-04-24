@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-
-import {AppComponent} from './app.component';
-import {HomeComponent} from './home/home.component';
-import {HashLocationStrategy, LocationStrategy} from '@angular/common';
-import {RouterModule, Routes} from '@angular/router';
-import {RegistrationComponent} from './registration/registration.component.';
-import {LoginComponent} from './login/login.component';
-
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
-const appRoutes: Routes = [
-  {
-    path: '',
-    component: HomeComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'register',
-    component: RegistrationComponent
-=======
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -54,7 +28,6 @@ const appRoutes: Routes = [
   {
     path: '',
     component: LoginComponent
->>>>>>> feature/front-end-authentication
   },
   {
     path: '',
@@ -72,12 +45,9 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-<<<<<<< HEAD
-=======
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
->>>>>>> feature/front-end-authentication
     NgbModule.forRoot(),
     RouterModule.forRoot(
       appRoutes, {
@@ -86,14 +56,8 @@ const appRoutes: Routes = [
     )
   ],
   providers: [
-<<<<<<< HEAD
-    {
-      provide: LocationStrategy, useClass: HashLocationStrategy
-    }
-=======
     AuthenticationService,
     AuthGuardService
->>>>>>> feature/front-end-authentication
   ],
   bootstrap: [AppComponent]
 })
