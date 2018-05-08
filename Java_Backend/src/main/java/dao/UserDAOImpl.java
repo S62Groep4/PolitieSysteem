@@ -7,11 +7,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Stateless
-public class UserDAOImpl implements UserDAO{
+public class UserDAOImpl implements UserDAO {
 
     @PersistenceContext
     EntityManager em;
-    
+
     @Override
     public List<User> getUserByEmail(String email) {
         return em.createNamedQuery("User.getByEmail").setParameter("email", email).getResultList();
@@ -21,5 +21,4 @@ public class UserDAOImpl implements UserDAO{
     public void insertUser(User user) {
         em.persist(user);
     }
-
 }

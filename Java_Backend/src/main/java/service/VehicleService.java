@@ -26,7 +26,7 @@ public class VehicleService {
     public VehicleService() {
     }
 
-    public List<Vehicle> getVehicle(String hashedLicenceplate) throws PersistenceException {
+    public Vehicle getVehicle(String hashedLicenceplate) throws PersistenceException {
         try {
             return vehicleDao.getVehicle(hashedLicenceplate);
         } catch (PersistenceException pe) {

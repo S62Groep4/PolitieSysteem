@@ -3,11 +3,9 @@ package dao;
 import domain.User;
 import java.util.List;
 
-
 public interface UserDAO {
-    
-    List<User> getUserByEmail(String email);
-    
-    void insertUser(User user);
 
+    List<User> getUserByEmail(String email);
+
+    void insertUser(User user);
 }

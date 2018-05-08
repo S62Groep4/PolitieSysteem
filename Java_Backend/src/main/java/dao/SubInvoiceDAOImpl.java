@@ -42,5 +42,4 @@ public class SubInvoiceDAOImpl implements SubInvoiceDAO {
         em.persist(invoice);
         return invoice;
     }
-
 }
