@@ -11,21 +11,29 @@ import javax.persistence.PersistenceException;
 
 @Stateless
 public class UserService {
-    
+
     @Inject
     UserDAO userDAO;
-    
+
     private static final Logger LOGGER = Logger.getLogger(UserService.class.getName());
-    
-    public UserService(){
-        
+
+    public UserService() {
+
     }
-    
-    public List<User> getUser(String email){
-        try{
+
+    public void insertUser(User user) {
+        try {
+            userDAO.insertUser(user);
+        } catch (PersistenceException ex) {
+            LOGGER.log(Level.FINE, "ERROR while performing insertUser method; {0}", ex.getMessage());
+        }
+    }
+
+    public List<User> getUser(String email) {
+        try {
             List<User> user = userDAO.getUserByEmail(email);
             return user;
-        }catch(PersistenceException ex){
+        } catch (PersistenceException ex) {
             LOGGER.log(Level.FINE, "ERROR while performing getUser method; {0}", ex.getMessage());
             return null;
         }

@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {VehicleService} from '../vehicle.service';
-import {Vehicle} from '../models/vehicleObject';
+import {Vehicle} from '../models/vehicle-object';
 import {Observable} from 'rxjs/Observable';
+import {SubInvoice} from '../models/subinvoice-object';
 
 @Component({
   templateUrl: './registration.component.html',
@@ -16,6 +17,8 @@ export class RegistrationComponent implements OnInit {
   vehicles: Vehicle[];
   observableSearchVehicle: Observable<Vehicle[]>;
   searchVehicle: Vehicle[];
+  observableInvoices: Observable<SubInvoice[]>;
+  subInvoices: SubInvoice[];
 
   constructor(private vehicleService: VehicleService) {
     this.getVehicles();
@@ -28,6 +31,11 @@ export class RegistrationComponent implements OnInit {
   getVehicles() {
     this.observableVehicles = this.vehicleService.getVehicles();
     this.observableVehicles.subscribe(vehicles => this.vehicles = vehicles);
+  }
+
+  getSubInvoices(uri: string) {
+    this.observableInvoices = this.vehicleService.getSubInvoice(uri);
+    this.observableInvoices.subscribe(subInvoices => this.subInvoices = subInvoices);
   }
 
   insertVehicle() {

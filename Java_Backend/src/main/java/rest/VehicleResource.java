@@ -33,14 +33,14 @@ public class VehicleResource {
 
     @POST
     public Response insertVehicle(VehicleDTO vehicle) {
-        Vehicle vehicleToÍnsert = DtoToDomain.VEHICLE_DTO_TO_DOMAIN(vehicle);
+        Vehicle vehicleToÍnsert = DtoToDomain.VEHICLE_LICENCEPLATE_DTO_TO_DOMAIN(vehicle);
         VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.insertVehicle(vehicleToÍnsert));
         return Response.ok(dto).build();
     }
 
     @PUT
     public Response updateVehicle(VehicleDTO vehicle) {
-        Vehicle vehicleToUpdate = DtoToDomain.VEHICLE_DTO_TO_DOMAIN(vehicle);
+        Vehicle vehicleToUpdate = DtoToDomain.VEHICLE_LICENCEPLATE_DTO_TO_DOMAIN(vehicle);
         VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.updateVehicle(vehicleToUpdate));
         return Response.ok(dto).build();
     }
