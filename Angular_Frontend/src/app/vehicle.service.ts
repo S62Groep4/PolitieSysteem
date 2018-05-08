@@ -7,6 +7,8 @@ import 'rxjs/add/operator/map';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {RegisterLicensePlateDTO} from './models/registerLicensePlateDTO-object';
 import {SubInvoice} from './models/subinvoice-object';
+import {Journey} from './models/journey-object';
+import {Translocation} from "./models/translocation-object";
 
 @Injectable()
 export class VehicleService {
@@ -25,6 +27,16 @@ export class VehicleService {
   getSubInvoice(uri: string): Observable<SubInvoice[]> {
     return this.http.get(uri)
       .map(response => response as SubInvoice[]);
+  }
+
+  getJourneys(uri: string): Observable<Journey[]> {
+    return this.http.get(uri)
+      .map(response => response as Journey[]);
+  }
+
+  getTranslocations(uri: string): Observable<Translocation[]> {
+    return this.http.get(uri)
+      .map(response => response as Translocation[]);
   }
 
   insertVehicle(vehicle: String): Observable<any> {
