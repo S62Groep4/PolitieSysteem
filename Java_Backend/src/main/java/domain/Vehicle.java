@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,6 +26,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class Vehicle implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private String hashedLicencePlate;
     @OneToMany(mappedBy = "vehicle", cascade = ALL)
     private final List<Journey> journeys = new ArrayList<>();

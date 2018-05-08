@@ -10,23 +10,25 @@ import {RegisterLicensePlateDTO} from './models/registerLicensePlateDTO-object';
 @Injectable()
 export class VehicleService {
 
+  ipAddress = 'http://localhost:44760/Java_Backend/api/';
+
   constructor(private http: HttpClient, private router: Router) {
 
   }
 
   getVehicles(): Observable<Vehicle[]> {
-    return this.http.get('http://localhost:8080/Java_Backend/api/vehicles')
+    return this.http.get(this.ipAddress + 'vehicles')
       .map(response => response as Vehicle[]);
   }
 
   insertVehicle(vehicle: String): Observable<any> {
     const newVehicle = new RegisterLicensePlateDTO(vehicle, vehicle);
     const header = {headers: new HttpHeaders({'Content-type': 'application/json'})};
-    return this.http.post('http://localhost:8080/Java_Backend/api/vehicles', newVehicle, header);
+    return this.http.post(this.ipAddress + 'vehicles', newVehicle, header);
   }
 
   searchCarByLicensePlate(licencePlate: String): Observable<Vehicle[]> {
-    return this.http.get('http://localhost:8080/Java_Backend/api/vehicles/' + licencePlate)
+    return this.http.get(this.ipAddress + 'vehicles/' + licencePlate)
       .map(response => response as Vehicle[]);
   }
 }

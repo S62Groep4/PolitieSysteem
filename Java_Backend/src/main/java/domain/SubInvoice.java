@@ -22,7 +22,7 @@ public class SubInvoice implements Serializable {
     @Id
     private String invoiceNumber;
     private String country;
-    private String paymentStatus;
+    private String isPayed;
     private String invoiceDate;
     private double price;
     @ManyToOne
@@ -38,21 +38,21 @@ public class SubInvoice implements Serializable {
         this.invoiceDate = new Date(System.currentTimeMillis()).toString();
     }
 
-    public SubInvoice(String invoiceNumber, String country, double price, String invoiceDate, String paymentStatus) {
+    public SubInvoice(String invoiceNumber, String country, double price, String invoiceDate, String isPayed) {
         this.invoiceNumber = invoiceNumber;
         this.country = country;
         this.price = price;
-        this.paymentStatus = paymentStatus;
+        this.isPayed = isPayed;
         this.invoiceDate = invoiceDate;
     }
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
+    public void setIsPayed(String isPayed) {
+        this.isPayed = isPayed;
     }
 
-    public String getPaymentStatus() {
-        return paymentStatus;
+    public String getIsPayed() {
+        return isPayed;
     }
 
     public void setVehicle(Vehicle vehicle) {
@@ -97,7 +97,7 @@ public class SubInvoice implements Serializable {
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.invoiceNumber);
         hash = 97 * hash + Objects.hashCode(this.country);
-        hash = 97 * hash + Objects.hashCode(this.paymentStatus);
+        hash = 97 * hash + Objects.hashCode(this.isPayed);
         hash = 97 * hash + Objects.hashCode(this.invoiceDate);
         hash = 97 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
         hash = 97 * hash + Objects.hashCode(this.vehicle);
