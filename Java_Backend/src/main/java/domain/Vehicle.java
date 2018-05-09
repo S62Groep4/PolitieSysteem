@@ -21,6 +21,7 @@ import org.mindrot.jbcrypt.BCrypt;
 @NamedQueries({
     @NamedQuery(name = "Vehicle.findAll", query = "SELECT v FROM Vehicle v")
     ,@NamedQuery(name = "Vehicle.findByLicenceplate", query = "SELECT v FROM Vehicle v WHERE v.licencePlate = :licencePlate")
+    ,@NamedQuery(name = "Vehicle.findByMultipleLicenceplates", query = "SELECT v FROM Vehicle v WHERE v.licencePlate LIKE :licencePlate")
     ,@NamedQuery(name = "Vehicle.findJourneys", query = "SELECT j FROM Journey j WHERE j.vehicle.licencePlate IN (SELECT v.licencePlate FROM Vehicle v WHERE v.licencePlate = :licencePlate)")
     ,@NamedQuery(name = "Vehicle.findInvoices", query = "SELECT i FROM SubInvoice i WHERE i.vehicle.licencePlate IN (SELECT v.licencePlate FROM Vehicle v WHERE v.licencePlate = :licencePlate)")})
 public class Vehicle implements Serializable {

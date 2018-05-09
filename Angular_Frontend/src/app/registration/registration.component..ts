@@ -55,15 +55,19 @@ export class RegistrationComponent implements OnInit {
   }
 
   insertVehicle() {
-    this.vehicleService.insertVehicle(this.model.licencePlate)
+    this.vehicleService.insertVehicle(this.model.hashedLicensePlate)
       .subscribe(vehicle => {
         this.reloadPage();
       });
   }
 
   searchCarByLicensePlate(licencePlate: String) {
-    this.observableSearchVehicle = this.vehicleService.searchCarByLicensePlate(licencePlate);
-    this.observableSearchVehicle.subscribe(vehicle => this.searchVehicle = vehicle);
+    if (licencePlate.length > 2) {
+      this.observableSearchVehicle = this.vehicleService.searchCarByLicensePlate(licencePlate);
+      this.observableSearchVehicle.subscribe(vehicle => this.searchVehicle = vehicle);
+    } else {
+      // Do nothing
+    }
   }
 
   reloadPage() {

@@ -56,8 +56,16 @@ public class VehicleResource {
     @GET
     @Path("{hashedLicensePlate}")
     public Response getVehicle(@PathParam("hashedLicensePlate") String encodedLicensePlate) {
-        String hashedLicensePlate = new String(Base64.getDecoder().decode(encodedLicensePlate));
+        String hashedLicensePlate = encodedLicensePlate;
         VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.getVehicle(hashedLicensePlate));
+        return Response.ok(dto).build();
+    }
+
+    @GET
+    @Path("searchvehicles/{hashedLicensePlate}")
+    public Response getSearchedVehicles(@PathParam("hashedLicensePlate") String encodedLicensePlate) {
+        String hashedLicensePlate = encodedLicensePlate;
+        List<VehicleDTO> dto = DomainToDto.VEHICLESTODTOS(vehicleService.getSearchedVehicles(hashedLicensePlate));
         return Response.ok(dto).build();
     }
 

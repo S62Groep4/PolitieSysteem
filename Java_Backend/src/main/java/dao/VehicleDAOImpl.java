@@ -30,6 +30,11 @@ public class VehicleDAOImpl implements VehicleDAO {
     }
 
     @Override
+    public List<Vehicle> getSearchedVehicles(String hashedLicenceplate) throws PersistenceException {
+        return em.createNamedQuery("Vehicle.findByMultipleLicenceplates").setParameter("licencePlate", "%" + hashedLicenceplate + "%").getResultList();
+    }
+
+    @Override
     public List<SubInvoice> getVehicleInvoices(String hashedLicencePlate) throws PersistenceException {
         return em.createNamedQuery("Vehicle.findInvoices").setParameter("licencePlate", hashedLicencePlate).getResultList();
     }

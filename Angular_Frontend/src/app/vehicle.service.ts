@@ -8,7 +8,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {RegisterLicensePlateDTO} from './models/registerLicensePlateDTO-object';
 import {SubInvoice} from './models/subinvoice-object';
 import {Journey} from './models/journey-object';
-import {Translocation} from "./models/translocation-object";
+import {Translocation} from './models/translocation-object';
 
 @Injectable()
 export class VehicleService {
@@ -46,7 +46,7 @@ export class VehicleService {
   }
 
   searchCarByLicensePlate(licencePlate: String): Observable<Vehicle[]> {
-    return this.http.get(this.uriAddress + 'vehicles/' + licencePlate)
+    return this.http.get(this.uriAddress + 'vehicles/searchvehicles/' + licencePlate)
       .map(response => response as Vehicle[]);
   }
 }
