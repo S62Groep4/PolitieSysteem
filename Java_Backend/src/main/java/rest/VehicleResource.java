@@ -33,14 +33,14 @@ public class VehicleResource {
 
     @POST
     public Response insertVehicle(VehicleDTO vehicle) {
-        Vehicle vehicleToÍnsert = DtoToDomain.VEHICLE_DTO_TO_DOMAIN(vehicle);
+        Vehicle vehicleToÍnsert = DtoToDomain.VEHICLE_LICENCEPLATE_DTO_TO_DOMAIN(vehicle);
         VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.insertVehicle(vehicleToÍnsert));
         return Response.ok(dto).build();
     }
 
     @PUT
     public Response updateVehicle(VehicleDTO vehicle) {
-        Vehicle vehicleToUpdate = DtoToDomain.VEHICLE_DTO_TO_DOMAIN(vehicle);
+        Vehicle vehicleToUpdate = DtoToDomain.VEHICLE_LICENCEPLATE_DTO_TO_DOMAIN(vehicle);
         VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.updateVehicle(vehicleToUpdate));
         return Response.ok(dto).build();
     }
@@ -56,8 +56,16 @@ public class VehicleResource {
     @GET
     @Path("{hashedLicensePlate}")
     public Response getVehicle(@PathParam("hashedLicensePlate") String encodedLicensePlate) {
-        String hashedLicensePlate = new String(Base64.getDecoder().decode(encodedLicensePlate));
+        String hashedLicensePlate = encodedLicensePlate;
         VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.getVehicle(hashedLicensePlate));
+        return Response.ok(dto).build();
+    }
+
+    @GET
+    @Path("searchvehicles/{hashedLicensePlate}")
+    public Response getSearchedVehicles(@PathParam("hashedLicensePlate") String encodedLicensePlate) {
+        String hashedLicensePlate = encodedLicensePlate;
+        List<VehicleDTO> dto = DomainToDto.VEHICLESTODTOS(vehicleService.getSearchedVehicles(hashedLicensePlate));
         return Response.ok(dto).build();
     }
 

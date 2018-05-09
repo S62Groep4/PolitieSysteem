@@ -1,10 +1,10 @@
 export class RegisterLicensePlateDTO {
   public licencePlate: String;
-  public hashedLicencePlate: String;
+  public hashedLicensePlate: String;
 
-  constructor(licencePlate: String, hashedLicencePlate: String) {
+  constructor(licencePlate: String, hashedLicensePlate: String) {
     this.licencePlate = licencePlate;
-    this.hashedLicencePlate = hashedLicencePlate;
+    this.hashedLicensePlate = hashedLicensePlate;
   }
 
   setLicencePlate(licencePlate: String) {
@@ -15,11 +15,11 @@ export class RegisterLicensePlateDTO {
     return this.licencePlate;
   }
 
-  setHashedLicensePlate(hashedLicencePlate: String) {
-    this.hashedLicencePlate = hashedLicencePlate;
+  setHashedLicensePlate(hashedLicensePlate: String) {
+    this.hashedLicensePlate = hashedLicensePlate;
   }
 
   getHashedLicensePlate() {
-    return this.hashedLicencePlate;
+    return this.hashedLicensePlate;
   }
 }

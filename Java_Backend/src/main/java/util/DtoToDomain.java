@@ -35,6 +35,29 @@ public class DtoToDomain {
         return new Vehicle(new String(Base64.getDecoder().decode(vehicleDTO.getHashedLicensePlate())));
     }
 
+    /*
+    Bottom functions are for adding a car with 
+    */
+    public static List<Vehicle> VEHICLE_LICENCEPLATE_DTO_TO_DOMAIN(List<VehicleDTO> vehicleDTOs) {
+        List<Vehicle> vehicles = new ArrayList<>();
+        if (vehicleDTOs == null || vehicleDTOs.isEmpty()) {
+            return vehicles;
+        }
+
+        for (VehicleDTO v : vehicleDTOs) {
+            Vehicle vehicle = new Vehicle(v.getHashedLicensePlate() ,v.getHashedLicensePlate());
+            vehicles.add(vehicle);
+        }
+        return vehicles;
+    }
+
+    public static Vehicle VEHICLE_LICENCEPLATE_DTO_TO_DOMAIN(VehicleDTO vehicleDTO) {
+        if (vehicleDTO == null) {
+            return new Vehicle();
+        }
+        return new Vehicle(vehicleDTO.getHashedLicensePlate(), vehicleDTO.getHashedLicensePlate());
+    }
+
     public static List<SubInvoice> SUBINVOICE_DTO_TO_DOMAIN(List<SubInvoiceDTO> invoiceDTOs) {
         List<SubInvoice> invoices = new ArrayList<>();
         if (invoiceDTOs == null || invoiceDTOs.isEmpty()) {

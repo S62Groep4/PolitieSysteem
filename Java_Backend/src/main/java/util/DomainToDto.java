@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class DomainToDto {
 
-    private static String apiUri = "http://localhost:8080/Java_Backend/api/";
+    private static String apiUri = "http://localhost:44760/Java_Backend/api/";
 
     public static List<VehicleDTO> VEHICLESTODTOS(List<Vehicle> vehicles) {
         List<VehicleDTO> vehicleDTOs = new ArrayList<>();

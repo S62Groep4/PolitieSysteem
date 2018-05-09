@@ -26,17 +26,22 @@ public class VehicleDAOImpl implements VehicleDAO {
 
     @Override
     public Vehicle getVehicle(String hashedLicenceplate) throws PersistenceException {
-        return (Vehicle) em.createNamedQuery("Vehicle.findByLicenceplate").setParameter("hashedLicencePlate", hashedLicenceplate).getSingleResult();
+        return (Vehicle) em.createNamedQuery("Vehicle.findByLicenceplate").setParameter("licencePlate", hashedLicenceplate).getSingleResult();
+    }
+
+    @Override
+    public List<Vehicle> getSearchedVehicles(String hashedLicenceplate) throws PersistenceException {
+        return em.createNamedQuery("Vehicle.findByMultipleLicenceplates").setParameter("licencePlate", "%" + hashedLicenceplate + "%").getResultList();
     }
 
     @Override
     public List<SubInvoice> getVehicleInvoices(String hashedLicencePlate) throws PersistenceException {
-        return em.createNamedQuery("Vehicle.findInvoices").setParameter("hashedLicencePlate", hashedLicencePlate).getResultList();
+        return em.createNamedQuery("Vehicle.findInvoices").setParameter("licencePlate", hashedLicencePlate).getResultList();
     }
 
     @Override
     public List<Journey> getVehicleJourneys(String hashedLicencePlate) throws PersistenceException {
-        return em.createNamedQuery("Vehicle.findJourneys").setParameter("hashedLicencePlate", hashedLicencePlate).getResultList();
+        return em.createNamedQuery("Vehicle.findJourneys").setParameter("licencePlate", hashedLicencePlate).getResultList();
     }
 
     @Override
