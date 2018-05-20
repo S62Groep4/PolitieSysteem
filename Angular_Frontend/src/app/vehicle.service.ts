@@ -9,11 +9,13 @@ import {RegisterLicensePlateDTO} from './models/registerLicensePlateDTO-object';
 import {SubInvoice} from './models/subinvoice-object';
 import {Journey} from './models/journey-object';
 import {Translocation} from './models/translocation-object';
+import {Person} from './models/person-object';
 
 @Injectable()
 export class VehicleService {
 
   uriAddress = 'http://localhost:44760/Java_Backend/api/';
+  externUriAdress = 'http://localhost:8080/Java_Backend/api/persons/';
 
   constructor(private http: HttpClient, private router: Router) {
 
@@ -37,6 +39,11 @@ export class VehicleService {
   getTranslocations(uri: string): Observable<Translocation[]> {
     return this.http.get(uri)
       .map(response => response as Translocation[]);
+  }
+
+  getPersonByLicenceplate(unhashedLicenceplate: String): Observable<Person> {
+    return this.http.get(this.externUriAdress + 'licenceplate/' + unhashedLicenceplate)
+      .map(response => response as Person);
   }
 
   insertVehicle(vehicle: String): Observable<any> {

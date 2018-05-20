@@ -3,8 +3,9 @@ import {VehicleService} from '../vehicle.service';
 import {Vehicle} from '../models/vehicle-object';
 import {Observable} from 'rxjs/Observable';
 import {SubInvoice} from '../models/subinvoice-object';
-import {Journey} from "../models/journey-object";
-import {Translocation} from "../models/translocation-object";
+import {Journey} from '../models/journey-object';
+import {Translocation} from '../models/translocation-object';
+import {Person} from '../models/person-object';
 
 @Component({
   templateUrl: './registration.component.html',
@@ -25,6 +26,8 @@ export class RegistrationComponent implements OnInit {
   journeys: Journey[];
   observableTranslocations: Observable<Translocation[]>;
   translocations: Translocation[];
+  observablePerson: Observable<Person>;
+  person: Person;
 
   constructor(private vehicleService: VehicleService) {
     this.getVehicles();
@@ -52,6 +55,11 @@ export class RegistrationComponent implements OnInit {
   getTranslocations(uri: string) {
     this.observableTranslocations = this.vehicleService.getTranslocations(uri);
     this.observableTranslocations.subscribe(translocations => this.translocations = translocations);
+  }
+
+  getPersonByLicenceplate(unhashedLicenceplate: String) {
+    this.observablePerson = this.vehicleService.getPersonByLicenceplate(unhashedLicenceplate);
+    this.observablePerson.subscribe(person => this.person = person);
   }
 
   insertVehicle() {

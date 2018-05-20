@@ -44,6 +44,12 @@
         <i class="fas fa-car fa-7x"></i>
         <h5 class="card-title">Vehicle</h5>
         <p>licenceplate: {{vehicle.hashedLicensePlate}}</p>
+        <i class="fas fa-user fa-2x"></i>
+        <button class="btn btn-outline-dark" (click)=getPersonByLicenceplate(vehicle.hashedLicensePlate)>
+          get owner
+        </button>
+        <p *ngIf="person">
+          owner: {{person.lastName}}, {{person.firstName}}</p>
         <p>
           <i class="fas fa-road fa-2x"></i>
           <button class="btn btn-outline-dark" (click)="getJourneys(vehicle.journeyUri)"
@@ -73,6 +79,13 @@
         <i class="fas fa-car fa-7x"></i>
         <h5 class="card-title">Vehicle</h5>
         <p>licenceplate: {{vehicle.hashedLicensePlate}}</p>
+        <i class="fas fa-user fa-2x"></i>
+        <button class="btn btn-outline-light" (click)=getPersonByLicenceplate(vehicle.hashedLicensePlate)>
+          get owner
+        </button>
+        <p *ngIf="person">
+          owner: {{person.lastName}}, {{person.firstName}}</p>
+        <p>
         <p>
           <i class="fas fa-road fa-2x"></i>
           <button class="btn btn-outline-light" (click)="getJourneys(vehicle.journeyUri)"
@@ -101,7 +114,9 @@
               <div *ngFor="let journey of journeys">
                 <p><i class="fas fa-file-alt fa-2x"></i> invoice number: {{journey.id}} </p>
                 <p><i class="fas fa-road  fa-2x"></i> journeys: {{journeys.length}}</p>
-                <button class="btn btn-danger" (click)="getTranslocations(journey.translocationUri)">show translocations</button>
+                <button class="btn btn-danger" (click)="getTranslocations(journey.translocationUri)">show
+                  translocations
+                </button>
                 <br>
                 <div *ngFor="let translocation of translocations">
                   <br>
