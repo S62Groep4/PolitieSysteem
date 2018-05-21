@@ -83,9 +83,12 @@
         <button class="btn btn-outline-light" (click)=getPersonByLicenceplate(vehicle.hashedLicensePlate)>
           get owner
         </button>
-        <p *ngIf="person">
+        <p *ngIf="person; else noOwner">
           owner: {{person.lastName}}, {{person.firstName}}</p>
         <p>
+        <ng-template #noOwner>
+        <p>no owner found</p>
+        </ng-template>
         <p>
           <i class="fas fa-road fa-2x"></i>
           <button class="btn btn-outline-light" (click)="getJourneys(vehicle.journeyUri)"
