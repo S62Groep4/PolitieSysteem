@@ -29,7 +29,7 @@ public class Init {
 
     @Inject
     JourneyService journeyService;
-    
+
     @Inject
     UserService userService;
 
@@ -67,14 +67,14 @@ public class Init {
         List<Vehicle> domainVehicles = VEHICLE_DTO_TO_DOMAIN(vehicles);
          */
 
-         /*
+ /*
         //|||||||||||||||||||||||||||||||||||||||||
         //||     PERSISTING DOMAIN OBJECTS       ||
         //|||||||||||||||||||||||||||||||||||||||||
          */
         User user = new User("Medewerker@mail.com", "1234");
         userService.insertUser(user);
-         
+
         Journey j1 = new Journey(1L);
         Journey j2 = new Journey(2L);
         TransLocation loc1 = new TransLocation(51.855305, 9.623518, "654161", "31");
@@ -94,12 +94,15 @@ public class Init {
         j2.addTransLocation(loc7);
 
         Vehicle veh1 = new Vehicle("68JFSF", "68JFSF");
-        //veh1.setUnHashedLicencePlate("68JFSF");
+        veh1.setUnHashedLicencePlate("68JFSF");
         veh1.addJourney(j1);
 
         Vehicle veh2 = new Vehicle("54HSHS", "54HSHS");
-        //veh2.setUnHashedLicencePlate("54HSHS");
+        veh2.setUnHashedLicencePlate("54HSHS");
         veh2.addJourney(j2);
+
+        Vehicle veh3 = new Vehicle("33DSVL", "33DSVL");
+        veh3.setUnHashedLicencePlate("33DSVL");
 
         SubInvoice inv1 = new SubInvoice(1L, "31", 165.00);
         veh1.addInvoice(inv1);

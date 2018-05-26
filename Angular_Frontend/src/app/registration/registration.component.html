@@ -43,9 +43,9 @@
       <div class="card-body bg-danger">
         <i class="fas fa-car fa-7x"></i>
         <h5 class="card-title">Vehicle</h5>
-        <p>licenceplate: {{vehicle.hashedLicensePlate}}</p>
+        <p>licenceplate: {{vehicle.licencePlate}}</p>
         <i class="fas fa-user fa-2x"></i>
-        <button class="btn btn-outline-dark" (click)=getPersonByLicenceplate(vehicle.hashedLicensePlate)>
+        <button class="btn btn-outline-dark" (click)=getPersonByLicenceplate(vehicle.licencePlate)>
           get owner
         </button>
         <p *ngIf="person">
@@ -78,7 +78,7 @@
       <div class="card-body bg-dark">
         <i class="fas fa-car fa-7x"></i>
         <h5 class="card-title">Vehicle</h5>
-        <p>licenceplate: {{vehicle.hashedLicensePlate}}</p>
+        <p>licenceplate: {{vehicle.licencePlate}}</p>
         <i class="fas fa-user fa-2x"></i>
         <button class="btn btn-outline-light" (click)=getPersonByLicenceplate(vehicle.hashedLicensePlate)>
           get owner

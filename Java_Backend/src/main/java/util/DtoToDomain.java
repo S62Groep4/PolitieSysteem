@@ -45,7 +45,8 @@ public class DtoToDomain {
         }
 
         for (VehicleDTO v : vehicleDTOs) {
-            Vehicle vehicle = new Vehicle(v.getHashedLicensePlate() ,v.getHashedLicensePlate());
+            Vehicle vehicle = new Vehicle(new String(Base64.getDecoder().decode(v.getHashedLicensePlate())), 
+                    new String(Base64.getDecoder().decode(v.getHashedLicensePlate())));
             vehicles.add(vehicle);
         }
         return vehicles;
@@ -55,7 +56,8 @@ public class DtoToDomain {
         if (vehicleDTO == null) {
             return new Vehicle();
         }
-        return new Vehicle(vehicleDTO.getHashedLicensePlate(), vehicleDTO.getHashedLicensePlate());
+        return new Vehicle(new String(Base64.getDecoder().decode(vehicleDTO.getHashedLicensePlate())), 
+                new String(Base64.getDecoder().decode(vehicleDTO.getHashedLicensePlate())));
     }
 
     public static List<SubInvoice> SUBINVOICE_DTO_TO_DOMAIN(List<SubInvoiceDTO> invoiceDTOs) {

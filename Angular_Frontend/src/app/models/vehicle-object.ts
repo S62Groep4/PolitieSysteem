@@ -8,7 +8,8 @@ export class Vehicle {
   public subInvoiceUri: SubInvoice[];
 
 
-  constructor(hashedLicensePlate: String, journeyUri: String, subInvoiceUri: SubInvoice[]) {
+  constructor(licencePlate: String, hashedLicensePlate: String, journeyUri: String, subInvoiceUri: SubInvoice[]) {
+    this.licencePlate = licencePlate;
     this.hashedLicensePlate = hashedLicensePlate;
     this.journeyUri = journeyUri;
     this.subInvoiceUri = subInvoiceUri;

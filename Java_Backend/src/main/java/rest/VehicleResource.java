@@ -4,18 +4,21 @@ import domain.Vehicle;
 import dto.JourneyDTO;
 import dto.SubInvoiceDTO;
 import dto.VehicleDTO;
+import dto.VehicleVisibleLicencePlateDTO;
 import java.util.Base64;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import service.VehicleService;
@@ -54,11 +57,18 @@ public class VehicleResource {
     }
 
     @GET
-    @Path("{hashedLicensePlate}")
-    public Response getVehicle(@PathParam("hashedLicensePlate") String encodedLicensePlate) {
-        String hashedLicensePlate = encodedLicensePlate;
-        VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.getVehicle(hashedLicensePlate));
-        return Response.ok(dto).build();
+    @Path("{LicensePlate}")
+    public Response getVehicle(
+            @DefaultValue("true") @QueryParam("hashed") boolean hashed,
+            @PathParam("LicensePlate") String licensePlate) {
+        if (hashed) {
+            String hashedLicensePlate = new String(Base64.getDecoder().decode(licensePlate));
+            VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.getVehicle(hashedLicensePlate, true));
+            return Response.ok(dto).build();
+        } else {
+            VehicleDTO dto = DomainToDto.VEHICLESTODTOS(vehicleService.getVehicle(licensePlate, false));
+            return Response.ok(dto).build();
+        }
     }
 
     @GET
@@ -87,7 +97,7 @@ public class VehicleResource {
 
     @GET
     public Response getAllVehicles() {
-        List<VehicleDTO> dto = DomainToDto.VEHICLESTODTOS(vehicleService.getAllVehicles());
+        List<VehicleVisibleLicencePlateDTO> dto = DomainToDto.VEHICLES_VISIBLE_LICENCEPLATE_TODTOS(vehicleService.getAllVehicles());
         return Response.ok(dto).build();
     }
 }
