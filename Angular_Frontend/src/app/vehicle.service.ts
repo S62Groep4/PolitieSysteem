@@ -14,15 +14,15 @@ import {Person} from './models/person-object';
 @Injectable()
 export class VehicleService {
 
-  uriAddress = 'http://localhost:44760/Java_Backend/api/';
-  externUriAdress = 'http://localhost:8080/Java_Backend/api/persons/';
+  URI_REKENING_ADMINISTRATIE_SYSTEEM = 'http://localhost:8080/Java_Backend/api/';
+  URI_POLITIE_SYSTEEM = 'http://localhost:44760/Java_Backend/api/';
 
   constructor(private http: HttpClient, private router: Router) {
 
   }
 
   getVehicles(): Observable<Vehicle[]> {
-    return this.http.get(this.uriAddress + 'vehicles')
+    return this.http.get(this.URI_REKENING_ADMINISTRATIE_SYSTEEM + 'vehicles')
       .map(response => response as Vehicle[]);
   }
 
@@ -42,18 +42,18 @@ export class VehicleService {
   }
 
   getPersonByLicenceplate(unhashedLicenceplate: String): Observable<Person> {
-    return this.http.get(this.externUriAdress + 'licenceplate/' + unhashedLicenceplate)
+    return this.http.get(this.URI_REKENING_ADMINISTRATIE_SYSTEEM + 'persons/licenceplate/' + unhashedLicenceplate)
       .map(response => response as Person);
   }
 
   insertVehicle(vehicle: String): Observable<any> {
     const newVehicle = new RegisterLicensePlateDTO(vehicle, vehicle);
     const header = {headers: new HttpHeaders({'Content-type': 'application/json'})};
-    return this.http.post(this.uriAddress + 'vehicles', newVehicle, header);
+    return this.http.post(this.URI_POLITIE_SYSTEEM + 'vehicles', newVehicle, header);
   }
 
   searchCarByLicensePlate(licencePlate: String): Observable<Vehicle[]> {
-    return this.http.get(this.uriAddress + 'vehicles/searchvehicles/' + licencePlate)
+    return this.http.get(this.URI_POLITIE_SYSTEEM + 'vehicles/searchvehicles/' + licencePlate)
       .map(response => response as Vehicle[]);
   }
 }

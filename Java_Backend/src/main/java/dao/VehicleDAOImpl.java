@@ -25,8 +25,12 @@ public class VehicleDAOImpl implements VehicleDAO {
     }
 
     @Override
-    public Vehicle getVehicle(String hashedLicenceplate) throws PersistenceException {
-        return (Vehicle) em.createNamedQuery("Vehicle.findByLicenceplate").setParameter("licencePlate", hashedLicenceplate).getSingleResult();
+    public Vehicle getVehicle(String licencePlate, boolean hashed) throws PersistenceException {
+        if(hashed){
+            return (Vehicle) em.createNamedQuery("Vehicle.findByHashedLicenceplate").setParameter("hashedLicencePlate", licencePlate).getSingleResult();
+        } else {
+            return (Vehicle) em.createNamedQuery("Vehicle.findByLicenceplate").setParameter("licencePlate", licencePlate).getSingleResult();
+        }
     }
 
     @Override
@@ -36,12 +40,12 @@ public class VehicleDAOImpl implements VehicleDAO {
 
     @Override
     public List<SubInvoice> getVehicleInvoices(String hashedLicencePlate) throws PersistenceException {
-        return em.createNamedQuery("Vehicle.findInvoices").setParameter("licencePlate", hashedLicencePlate).getResultList();
+        return em.createNamedQuery("Vehicle.findInvoices").setParameter("hashedLicencePlate", hashedLicencePlate).getResultList();
     }
 
     @Override
     public List<Journey> getVehicleJourneys(String hashedLicencePlate) throws PersistenceException {
-        return em.createNamedQuery("Vehicle.findJourneys").setParameter("licencePlate", hashedLicencePlate).getResultList();
+        return em.createNamedQuery("Vehicle.findJourneys").setParameter("hashedLicencePlate", hashedLicencePlate).getResultList();
     }
 
     @Override

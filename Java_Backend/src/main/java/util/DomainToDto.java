@@ -15,7 +15,8 @@ import java.util.List;
  */
 public class DomainToDto {
 
-    private static String apiUri = "http://192.168.24.91:8282/PolitieSysteem/api/";
+    //private static String apiUri = "http://192.168.24.91:8282/PolitieSysteem/api/";
+    private static String apiUri = "http://localhost:44760/Java_Backend/api/";
 
     public static List<VehicleDTO> VEHICLESTODTOS(List<Vehicle> vehicles) {
         List<VehicleDTO> vehicleDTOs = new ArrayList<>();
@@ -25,6 +26,23 @@ public class DomainToDto {
 
         for (Vehicle vehicle : vehicles) {
             VehicleDTO vehicleDTO = new VehicleDTO(
+                    vehicle.getHashedLicencePlate(),
+                    apiUri + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
+                    apiUri + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices");
+            vehicleDTOs.add(vehicleDTO);
+        }
+        return vehicleDTOs;
+    }
+
+    public static List<VehicleVisibleLicencePlateDTO> VEHICLES_VISIBLE_LICENCEPLATE_TODTOS(List<Vehicle> vehicles) {
+        List<VehicleVisibleLicencePlateDTO> vehicleDTOs = new ArrayList<>();
+        if (vehicles == null || vehicles.isEmpty()) {
+            return vehicleDTOs;
+        }
+
+        for (Vehicle vehicle : vehicles) {
+            VehicleVisibleLicencePlateDTO vehicleDTO = new VehicleVisibleLicencePlateDTO(
+                    vehicle.getLicencePlate(),
                     vehicle.getHashedLicencePlate(),
                     apiUri + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/journeys",
                     apiUri + "vehicles/" + new String(Base64.getEncoder().encode(vehicle.getHashedLicencePlate().getBytes())) + "/invoices");
