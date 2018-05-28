@@ -11,6 +11,7 @@ import { AuthenticationService } from './authentication.service';
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {VehicleService} from './vehicle.service';
+import {AgmCoreModule} from '@agm/core';
 
 const appRoutes: Routes = [
   {
@@ -47,6 +48,9 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAX2lyIJrSmki1oGGv5v-wLF81ttToCLNk'
+    }),
     RouterModule.forRoot(
       appRoutes, {
         useHash: false

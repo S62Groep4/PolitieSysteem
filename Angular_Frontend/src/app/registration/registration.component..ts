@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {VehicleService} from '../vehicle.service';
 import {Vehicle} from '../models/vehicle-object';
-import {Observable} from 'rxjs/Observable';
 import {SubInvoice} from '../models/subinvoice-object';
 import {Journey} from '../models/journey-object';
 import {Translocation} from '../models/translocation-object';
 import {Person} from '../models/person-object';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   templateUrl: './registration.component.html',
@@ -14,52 +14,51 @@ import {Person} from '../models/person-object';
 })
 
 export class RegistrationComponent implements OnInit {
+  // Google maps values
+  lat = 51.6;
+  lng = 7.80;
+  locationChosen = false;
+
   title = 'Registrierungsseite';
   model: any = {};
-  observableVehicles: Observable<Vehicle[]>;
   vehicles: Vehicle[];
-  observableSearchVehicle: Observable<Vehicle[]>;
   searchVehicle: Vehicle[];
-  observableInvoices: Observable<SubInvoice[]>;
   subInvoices: SubInvoice[];
-  observableJourneys: Observable<Journey[]>;
   journeys: Journey[];
-  observableTranslocations: Observable<Translocation[]>;
   translocations: Translocation[];
-  observablePerson: Observable<Person>;
   person: Person;
 
-  constructor(private vehicleService: VehicleService) {
+  constructor(private vehicleService: VehicleService, public sanitizer: DomSanitizer) {
     this.getVehicles();
   }
 
-  ngOnInit() {
+  onChoseLocation(event) {
+    this.lat = event.coords.lat;
+    this.lng = event.coords.lng;
+    //this.locationChosen = true;
+  }
 
+  ngOnInit() {
   }
 
   getVehicles() {
-    this.observableVehicles = this.vehicleService.getVehicles();
-    this.observableVehicles.subscribe(vehicles => this.vehicles = vehicles);
+    this.vehicleService.getVehicles().subscribe(vehicles => this.vehicles = vehicles);
   }
 
   getSubInvoices(uri: string) {
-    this.observableInvoices = this.vehicleService.getSubInvoice(uri);
-    this.observableInvoices.subscribe(subInvoices => this.subInvoices = subInvoices);
+    this.vehicleService.getSubInvoice(uri).subscribe(subInvoices => this.subInvoices = subInvoices);
   }
 
   getJourneys(uri: string) {
-    this.observableJourneys = this.vehicleService.getJourneys(uri);
-    this.observableJourneys.subscribe(journeys => this.journeys = journeys);
+    this.vehicleService.getJourneys(uri).subscribe(journeys => this.journeys = journeys);
   }
 
   getTranslocations(uri: string) {
-    this.observableTranslocations = this.vehicleService.getTranslocations(uri);
-    this.observableTranslocations.subscribe(translocations => this.translocations = translocations);
+    this.vehicleService.getTranslocations(uri).subscribe(translocations => this.translocations = translocations);
   }
 
   getPersonByLicenceplate(unhashedLicenceplate: String) {
-    this.observablePerson = this.vehicleService.getPersonByLicenceplate(unhashedLicenceplate);
-    this.observablePerson.subscribe(person => this.person = person);
+    this.vehicleService.getPersonByLicenceplate(unhashedLicenceplate).subscribe(person => this.person = person);
   }
 
   insertVehicle() {
@@ -71,8 +70,7 @@ export class RegistrationComponent implements OnInit {
 
   searchCarByLicensePlate(licencePlate: String) {
     if (licencePlate.length > 2) {
-      this.observableSearchVehicle = this.vehicleService.searchCarByLicensePlate(licencePlate);
-      this.observableSearchVehicle.subscribe(vehicle => this.searchVehicle = vehicle);
+      this.vehicleService.searchCarByLicensePlate(licencePlate).subscribe(vehicle => this.searchVehicle = vehicle);
     } else {
       // Do nothing
     }
