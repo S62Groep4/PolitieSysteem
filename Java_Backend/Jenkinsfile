@@ -15,7 +15,7 @@ node {
     }
 
     stage('Build'){
-        sh "mvn -f Java_Backend/Pom.xml clean install"
+        sh "mvn -f Java_Backend/pom.xml clean install"
     }
 
     stage('Sonar'){
