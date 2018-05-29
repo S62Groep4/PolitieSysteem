@@ -54,7 +54,7 @@ node {
     }
 
     stage('Deploy'){
-        sh 'mvn glassfish:deploy'
+        sh 'mvn embedded-glassfish:deploy'
         input message: 'Please check if the application is deployed successfully'
     }
 }
