@@ -20,7 +20,7 @@ node {
 
     stage('Sonar'){
         try {
-            sh "mvn sonar:sonar"
+            sh "mvn -f Java_Backend/pom.xml sonar:sonar"
         } catch(error){
             echo "The sonar server could not be reached ${error}"
         }
