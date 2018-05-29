@@ -54,7 +54,7 @@ node {
     }
 
     stage('Deploy'){
-        sh 'mvn payara:deploy -Dpayara.address=192.168.24.91 -Dpayara.hostname=192.168.24.100 -Dpayara.port=6868 -Dpayara.username=admin -Dpayara.password=admin'
+        sh 'mvn glassfish:deploy -Dglassfish.address=192.168.24.91 -Dglassfish.hostname=192.168.24.100 -Dglassfish.port=6868 -Dglassfish.username=admin -Dglassfish.password=admin'
         input message: 'Please check if the application is deployed successfully'
     }
 }
