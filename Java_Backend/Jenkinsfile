@@ -54,14 +54,7 @@ node {
     }
 
     stage('Deploy'){
-	steps {
-            withMaven(
-                maven: 'Maven 3.5.3',
-                mavenSettingsConfig: 'maven_artifactory'
-            ) {
-                sh 'mvn payara:deploy -Dpayara.address=192.168.24.91 -Dpayara.hostname=192.168.24.100 -Dpayara.port=6868 -Dpayara.username=admin -Dpayara.password=admin'
-                input message: 'Please check if the application is deployed successfully'
-            }
-        }
+        sh 'mvn payara:deploy -Dpayara.address=192.168.24.91 -Dpayara.hostname=192.168.24.100 -Dpayara.port=6868 -Dpayara.username=admin -Dpayara.password=admin'
+        input message: 'Please check if the application is deployed successfully'
     }
 }
