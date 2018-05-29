@@ -1,8 +1,18 @@
 def CONTAINER_NAME="politiesysteem"
 def CONTAINER_TAG="latest"
 
+env.BN = VersionNumber([
+        versionNumberString : '${BUILD_MONTH}.${BUILDS_TODAY}.${BUILD_NUMBER}', 
+        projectStartDate : '2018-01-01', 
+        versionPrefix : 'v1.'
+    ])
+
 node {
     git url: 'https://github.com/S62Groep4/PolitieSysteem.git'
+
+    echo 'Change the project version ...'
+        def W_M2_HOME = tool 'Maven'
+        bat "${W_M2_HOME}\\bin\\mvn versions:set -DnewVersion=$BN -DgenerateBackupPoms=false"
 
     stage('Initialize'){
         def dockerHome = tool 'Docker'
