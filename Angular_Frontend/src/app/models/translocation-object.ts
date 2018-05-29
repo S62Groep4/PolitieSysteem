@@ -4,6 +4,7 @@ export class Translocation {
   public lat: Number;
   public lon: Number;
   public serialNumber: String;
+  public carlocation: String;
 
   constructor(countryCode: String, dateTime: String, lat: Number, lon: Number, serialNumber: String) {
     this.countryCode = countryCode;

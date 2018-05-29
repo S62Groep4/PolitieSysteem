@@ -5,19 +5,21 @@ import {SubInvoice} from '../models/subinvoice-object';
 import {Journey} from '../models/journey-object';
 import {Translocation} from '../models/translocation-object';
 import {Person} from '../models/person-object';
-import {DomSanitizer} from '@angular/platform-browser';
+import {WebsocketService} from '../websocket.service';
+import {TranslocationService} from '../translocation.service';
 
 @Component({
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],
-  providers: [VehicleService]
+  providers: [VehicleService, WebsocketService, TranslocationService]
 })
 
 export class RegistrationComponent implements OnInit {
   // Google maps values
-  lat = 51.6;
-  lng = 7.80;
-  locationChosen = false;
+  lat = 51.690989;
+  lng = 7.809564;
+  selectCarHistroy = false;
+  selectCarLive = false;
 
   title = 'Registrierungsseite';
   model: any = {};
@@ -26,16 +28,16 @@ export class RegistrationComponent implements OnInit {
   subInvoices: SubInvoice[];
   journeys: Journey[];
   translocations: Translocation[];
+  transLocationsLive: Translocation[];
   person: Person;
 
-  constructor(private vehicleService: VehicleService, public sanitizer: DomSanitizer) {
+  constructor(private vehicleService: VehicleService, private translocationService: TranslocationService) {
     this.getVehicles();
   }
 
   onChoseLocation(event) {
     this.lat = event.coords.lat;
     this.lng = event.coords.lng;
-    //this.locationChosen = true;
   }
 
   ngOnInit() {
@@ -78,5 +80,24 @@ export class RegistrationComponent implements OnInit {
 
   reloadPage() {
     location.reload();
+  }
+
+  selectCarHistroyOn() {
+    this.selectCarHistroy = true;
+    this.selectCarLive = false;
+  }
+
+  selectCarLiveOn() {
+    this.selectCarLive = true;
+    this.selectCarHistroy = false;
+    this.getTranslocationsLive(this.translocationService);
+  }
+
+  getTranslocationsLive(translocationService: TranslocationService) {
+    console.log('Retrieving live locations...')
+    translocationService.transLocationsLive.subscribe(msg => {
+      console.log('Response from websocket: ' + JSON.stringify(msg));
+      this.transLocationsLive.unshift(msg);
+    });
   }
 }
