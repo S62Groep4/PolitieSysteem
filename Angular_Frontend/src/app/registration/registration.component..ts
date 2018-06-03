@@ -7,11 +7,13 @@ import {Translocation} from '../models/translocation-object';
 import {Person} from '../models/person-object';
 import {WebsocketService} from '../websocket.service';
 import {TranslocationService} from '../translocation.service';
+import {EuropolService} from '../europol.service';
+import {VehicleEuropol} from "../models/VehicleEuropol";
 
 @Component({
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],
-  providers: [VehicleService, WebsocketService, TranslocationService]
+  providers: [VehicleService, WebsocketService, TranslocationService, EuropolService]
 })
 
 export class RegistrationComponent implements OnInit {
@@ -31,8 +33,14 @@ export class RegistrationComponent implements OnInit {
   transLocationsLive: Translocation[];
   person: Person;
 
-  constructor(private vehicleService: VehicleService, private translocationService: TranslocationService) {
+  // Retrieve stolen vehicles from Europol System
+  stolenVehicles: VehicleEuropol[];
+
+  constructor(private vehicleService: VehicleService, private translocationService: TranslocationService,
+              private europolService: EuropolService) {
     this.getVehicles();
+    // Retrieve stolen vehicles from Europol System
+    this.getStolenVehicles();
   }
 
   onChoseLocation(event) {
@@ -99,5 +107,10 @@ export class RegistrationComponent implements OnInit {
       console.log('Response from websocket: ' + JSON.stringify(msg));
       this.transLocationsLive.unshift(msg);
     });
+  }
+
+  // Retrieve stolen vehicles from Europol system
+  getStolenVehicles() {
+    this.europolService.getStolenVehicles().subscribe(stolenVehicles => this.stolenVehicles = stolenVehicles);
   }
 }
