@@ -39,8 +39,11 @@
 </div>
 
 <div class="container-fluid text-center text-dark">
+  <hr class="bg-dark">
   <br>
   <h3>Auto gefunden</h3>
+  <br>
+  <hr class="bg-dark">
   <div class="row justify-content-center">
     <div *ngFor="let vehicle of searchVehicle" class="card" style="width: 18rem;">
       <div class="card-body bg-danger">
@@ -71,7 +74,6 @@
           <i class="fas fa-search-plus fa-2x"></i>
           <button class="btn btn-outline-dark"
                   onclick="document.getElementById('id03').style.display='block'">
-            track car
           </button>
         </p>
       </div>
@@ -143,8 +145,8 @@
                   <hr>
                   <p><i class="fas fa-flag fa-2x fa-2x"></i> Country code: {{translocation.countryCode}} </p>
                   <p><i class="fas fa-clock fa-2x"></i> Date: {{translocation.dateTime}}</p>
-                  <p><i class="fas fa-map-marker-alt fa-2x"></i> Latitude: {{translocation.lat}} </p>
-                  <p><i class="fas fa-map-marker-alt fa-2x"></i> Longtitude: {{translocation.lon}}</p>
+                  <p><i class="fas fa-map-marker-alt fa-2x"></i> Latitude: {{translocation.lat | number:'1.6-6'}} </p>
+                  <p><i class="fas fa-map-marker-alt fa-2x"></i> Longtitude: {{translocation.lon | number:'1.6-6'}}</p>
                   <p><i class="fas fa-list-ul"></i> Serial number: {{translocation.serialNumber}}</p>
                 </div>
               </div>
@@ -181,17 +183,87 @@
               class="w3-button w3-display-topright">&times;</span>
               <h2>Gefundene Auto</h2>
             </header>
-            <div class="w3-container text-dark">
-              <p *ngIf="translocations">amount of translocations: {{translocations.length}}</p>
-              <agm-map  [latitude]="lat" [longitude]="lng" (mapClick)="onChoseLocation($event)">
-                <agm-marker *ngFor="let location of translocations"
-                  [latitude]="location.lat"
-                  [longitude]="location.lon">
-                </agm-marker>
-              </agm-map>
+            <div>
+              <br>
+              <button class="btn btn-danger" (click)="selectCarHistroyOn()">Car track history</button>
+              <button class="btn btn-danger" (click)="selectCarLiveOn()">Car tracking live</button>
+              <br>
+              <br>
+
+              <!--Looking into car translocation history-->
+              <div *ngIf="selectCarHistroy" class="w3-container text-dark">
+                <p *ngIf="translocations">amount of translocations: {{translocations.length}}</p>
+                <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="onChoseLocation($event)">
+                  <agm-marker *ngFor="let location of translocations"
+                              [latitude]="location.lat"
+                              [longitude]="location.lon">
+                    <agm-info-window>
+                      Date of visitation: <b>{{location.dateTime | date:'longDate'}}</b>
+                      time of visitation: <b>{{location.dateTime | date:'shortTime'}}</b>
+                    </agm-info-window>
+
+                    <agm-polyline [editable]="false">
+                      <agm-polyline-point *ngFor="let data of translocations"
+                                          [latitude]="data.lat"
+                                          [longitude]="data.lon">
+                      </agm-polyline-point>
+                    </agm-polyline>
+                  </agm-marker>
+                </agm-map>
+              </div>
+
+              <!--Looking into car translocation live data-->
+              <div *ngIf="selectCarLive" class="w3-container text-dark">
+                <agm-map [latitude]="lat" [longitude]="lng">
+                  <agm-marker *ngFor="let location of transLocationsLive"
+                              [latitude]="location.lat"
+                              [longitude]="location.lon">
+                    <agm-info-window>
+                      Date of visitation: <b>{{location.dateTime | date:'longDate'}}</b>
+                      time of visitation: <b>{{location.dateTime | date:'shortTime'}}</b>
+                    </agm-info-window>
+
+                    <agm-polyline [editable]="false">
+                      <agm-polyline-point *ngFor="let data of translocations"
+                                          [latitude]="data.lat"
+                                          [longitude]="data.lon">
+                      </agm-polyline-point>
+                    </agm-polyline>
+                  </agm-marker>
+                </agm-map>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="container-fluid text-center text-dark">
+  <!--Retrieve stolen vehicles from Europol system-->
+  <hr class="bg-dark">
+  <br>
+  <h3 class="text-dark">Stolen vehicles</h3>
+  <br>
+  <hr class="bg-dark">
+  <h3 *ngIf="stolenVehicles">total stolen vehicles: {{stolenVehicles.length}}</h3>
+  <div class="row justify-content-center">
+    <div *ngFor="let stolenVehicle of stolenVehicles" class="card" style="width: 18rem;">
+      <div class="card-body stolen">
+        <i class="fas fa-car fa-7x"></i>
+        <h5 class="card-title">Vehicle</h5>
+        <p>country origin: {{stolenVehicle.originCountry}}</p>
+        <p>serial number: {{stolenVehicle.serialNumber}}</p>
+        <p>hashed licence plate: {{stolenVehicle.HashedLicensePlate}}</p>
+        <p>
+          <i class="fas fa-search-plus fa-2x"></i>
+          <button class="btn btn-outline-light"
+                  onclick="document.getElementById('id03').style.display='block'">
+            track car
+          </button>
+        </p>
       </div>
     </div>
   </div>
