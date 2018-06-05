@@ -12,16 +12,16 @@ import org.mindrot.jbcrypt.BCrypt;
 @Entity
 //NamedQueries
 @NamedQueries({
-@NamedQuery(name = "User.getByEmail", query = "SELECT u FROM User u WHERE u.email LIKE :email")})
+    @NamedQuery(name = "User.getByEmail", query = "SELECT u FROM User u WHERE u.email LIKE :email")})
 public class User {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @Column(unique = true)
     private String email;
     private String password;
-    
+
     private static final int workload = 12;
     private static final String salt = BCrypt.gensalt(workload);
 
@@ -37,11 +37,11 @@ public class User {
     public String getPassword() {
         return password;
     }
-    
-    public void setPassword(String password){
+
+    public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public long getId() {
         return id;
     }
@@ -50,16 +50,14 @@ public class User {
         this.id = id;
     }
     // </editor-fold>
-    
-    public User(){
-        
+
+    public User() {
+
     }
-    
-    public User(String email, String password){
+
+    public User(String email, String password) {
         this.email = email;
         this.password = BCrypt.hashpw(password, salt);
     }
-    
-    
 
 }

@@ -25,12 +25,12 @@ const appRoutes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: '',
+    path: 'login',
     component: LoginComponent
   },
   {
     path: '',
-    redirectTo: '',
+    redirectTo: 'home',
     pathMatch: 'full'
   }
 ];

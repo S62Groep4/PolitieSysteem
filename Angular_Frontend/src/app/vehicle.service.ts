@@ -15,7 +15,7 @@ import {Person} from './models/person-object';
 export class VehicleService {
 
   URI_REKENING_ADMINISTRATIE_SYSTEEM = 'http://localhost:8080/Java_Backend/api/';
-  URI_POLITIE_SYSTEEM = 'http://localhost:44760/Java_Backend/api/';
+  URI_POLITIE_SYSTEEM = 'http://localhost:43691/Java_Backend/api/';
 
   constructor(private http: HttpClient, private router: Router) {
 

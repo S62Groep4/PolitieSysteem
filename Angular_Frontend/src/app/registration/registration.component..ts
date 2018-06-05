@@ -8,7 +8,7 @@ import {Person} from '../models/person-object';
 import {WebsocketService} from '../websocket.service';
 import {TranslocationService} from '../translocation.service';
 import {EuropolService} from '../europol.service';
-import {VehicleEuropol} from "../models/VehicleEuropol";
+import {VehicleEuropol} from '../models/VehicleEuropol';
 
 @Component({
   templateUrl: './registration.component.html',
@@ -102,7 +102,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   getTranslocationsLive(translocationService: TranslocationService) {
-    console.log('Retrieving live locations...')
+    console.log('Retrieving live locations...');
     translocationService.transLocationsLive.subscribe(msg => {
       console.log('Response from websocket: ' + JSON.stringify(msg));
       this.transLocationsLive.unshift(msg);

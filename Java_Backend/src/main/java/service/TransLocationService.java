@@ -23,8 +23,8 @@ public class TransLocationService {
 
     public TransLocationService() {
     }
-    
-    public List<TransLocation> getAllTransLocationsByJourney(long id){
+
+    public List<TransLocation> getAllTransLocationsByJourney(long id) {
         try {
             return translocationDao.getAllTransLocationsByJourney(id);
         } catch (PersistenceException pe) {

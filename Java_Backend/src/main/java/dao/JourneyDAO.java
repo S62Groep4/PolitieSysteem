@@ -11,7 +11,7 @@ import javax.persistence.PersistenceException;
 public interface JourneyDAO {
 
     List<Journey> getAllJourneys() throws PersistenceException;
-    
+
     Journey getJourney(Long id) throws PersistenceException;
 
     Journey updateJourney(Journey journey) throws PersistenceException;

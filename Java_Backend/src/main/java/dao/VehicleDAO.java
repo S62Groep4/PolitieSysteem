@@ -13,13 +13,13 @@ import javax.persistence.PersistenceException;
 public interface VehicleDAO {
 
     Vehicle getVehicle(String Licenceplate, boolean hashed) throws PersistenceException;
-    
+
     List<Vehicle> getSearchedVehicles(String hashedLicenceplate) throws PersistenceException;
 
     List<Vehicle> getAllVehicles() throws PersistenceException;
-    
+
     List<SubInvoice> getVehicleInvoices(String hashedLicencePlate) throws PersistenceException;
-    
+
     List<Journey> getVehicleJourneys(String hashedLicencePlate) throws PersistenceException;
 
     Vehicle updateVehicle(Vehicle vehicle) throws PersistenceException;

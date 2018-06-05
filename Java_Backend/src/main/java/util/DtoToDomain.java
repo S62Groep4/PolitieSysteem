@@ -37,7 +37,7 @@ public class DtoToDomain {
 
     /*
     Bottom functions are for adding a car with 
-    */
+     */
     public static List<Vehicle> VEHICLE_LICENCEPLATE_DTO_TO_DOMAIN(List<VehicleDTO> vehicleDTOs) {
         List<Vehicle> vehicles = new ArrayList<>();
         if (vehicleDTOs == null || vehicleDTOs.isEmpty()) {
@@ -45,7 +45,7 @@ public class DtoToDomain {
         }
 
         for (VehicleDTO v : vehicleDTOs) {
-            Vehicle vehicle = new Vehicle(new String(Base64.getDecoder().decode(v.getHashedLicensePlate())), 
+            Vehicle vehicle = new Vehicle(new String(Base64.getDecoder().decode(v.getHashedLicensePlate())),
                     new String(Base64.getDecoder().decode(v.getHashedLicensePlate())));
             vehicles.add(vehicle);
         }
@@ -56,7 +56,7 @@ public class DtoToDomain {
         if (vehicleDTO == null) {
             return new Vehicle();
         }
-        return new Vehicle(new String(Base64.getDecoder().decode(vehicleDTO.getHashedLicensePlate())), 
+        return new Vehicle(new String(Base64.getDecoder().decode(vehicleDTO.getHashedLicensePlate())),
                 new String(Base64.getDecoder().decode(vehicleDTO.getHashedLicensePlate())));
     }
 

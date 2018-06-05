@@ -19,26 +19,26 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 @JWTokenNeeded
-public class JWTFilter implements ContainerRequestFilter{
+public class JWTFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         //Get the data stored in the authorization header.
         String authHeaderValue = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        
+
         //Check if the data is null or empty.
-        if(authHeaderValue == null || authHeaderValue.equals("")){
+        if (authHeaderValue == null || authHeaderValue.equals("")) {
             throw new WebApplicationException("Authorization header was not set", 401);
         }
-        
+
         //Get the actual token from the data.
         String jsonWebToken = authHeaderValue.substring("Bearer".length()).trim();
-        
-        try{
+
+        try {
             //Set the algorithm for decoding the token.
             Algorithm alg = Algorithm.HMAC512("Proftaak");
             JWTVerifier jwtVerifier = JWT.require(alg).withIssuer("Duitsland").build();
-            
+
             //Decode the token
             DecodedJWT decodedToken = jwtVerifier.verify(jsonWebToken);
             //Attempt to get the data from the token, in this case the user who is currently logged in on the frontend and requesting data from the backend.
@@ -46,7 +46,7 @@ public class JWTFilter implements ContainerRequestFilter{
             SecurityContext sc = requestContext.getSecurityContext();
             //Set the securityContext again so that the signature remains valid.
             requestContext.setSecurityContext(
-            new SecurityContext(){
+                    new SecurityContext() {
 
                 @Override
                 public Principal getUserPrincipal() {
@@ -68,7 +68,7 @@ public class JWTFilter implements ContainerRequestFilter{
                     return "Bearer";
                 }
             });
-        }catch(UnsupportedEncodingException ex){
+        } catch (UnsupportedEncodingException ex) {
             //TODO; handle errors
         }
     }

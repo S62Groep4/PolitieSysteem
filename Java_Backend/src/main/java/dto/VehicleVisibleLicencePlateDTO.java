@@ -33,7 +33,7 @@ public class VehicleVisibleLicencePlateDTO {
     public void setLicencePlate(String licencePlate) {
         this.licencePlate = licencePlate;
     }
-    
+
     public void setHashedLicensePlate(String hashedLicensePlate) {
         this.hashedLicensePlate = hashedLicensePlate;
     }

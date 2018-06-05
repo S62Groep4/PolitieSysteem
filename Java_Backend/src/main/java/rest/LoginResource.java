@@ -17,21 +17,20 @@ import service.LoginService;
 @Produces(APPLICATION_JSON)
 @Stateless
 public class LoginResource {
-    
+
     @Inject
     LoginService loginService;
-    
+
     @POST
-    public Response login(User user){
+    public Response login(User user) {
         System.out.println(user.getEmail());
         boolean valid = loginService.verifyLogin(user.getEmail(), user.getPassword());
-        
-        if(valid == true){
+
+        if (valid == true) {
             String token = loginService.returnToken(user.getEmail());
             return Response.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + token).header("Access-Control-Expose-Headers", "Authorization").build();
         }
-        
+
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
-
 }

@@ -10,9 +10,10 @@ export class TranslocationService {
   public transLocationsLive: Subject<Translocation>;
 
   constructor(private http: HttpClient, private websocketService: WebsocketService) {
-    this.transLocationsLive = <Subject<Translocation>>websocketService
-      .connect('ws://localhost:8080/[administration-endpoint-needed]')
+    this.transLocationsLive = <Subject<Translocation>>this.websocketService
+      .connect('ws://localhost:43723/Java_Backend/serverwsendpoint')
       .map((response: MessageEvent): Translocation => {
+        console.log('response from mapping');
         const data = JSON.parse(response.data);
         return data;
       });

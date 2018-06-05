@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class EuropolService {
 
-  URI_EUROPOL = 'http://192.168.24.101:8000/api/vehicles/?originCountry=DE';
+  URI_EUROPOL = 'http://192.168.24.101:8000/api/v2/vehicles/?originCountry=DE';
 
   constructor(private http: HttpClient) {
 

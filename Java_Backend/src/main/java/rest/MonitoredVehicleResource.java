@@ -12,9 +12,9 @@ import javax.ws.rs.core.Response;
 @Path("monitored")
 @Consumes(MediaType.APPLICATION_JSON)
 public class MonitoredVehicleResource {
-    
+
     @POST
-    public Response monitoredTransLocation(TransLocation transLocation){
+    public Response monitoredTransLocation(TransLocation transLocation) {
         //Do stuff with the transLocation data
         return Response.ok().build();
     }

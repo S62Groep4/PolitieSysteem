@@ -8,7 +8,7 @@ import {print} from 'util';
 @Injectable()
 export class AuthenticationService {
 
-  ipAddress = 'http://localhost:44760/Java_Backend/api/';
+  ipAddress = 'http://localhost:8080/Java_Backend/api/';
   httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
   constructor(private http: HttpClient) {

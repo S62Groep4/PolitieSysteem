@@ -74,7 +74,7 @@ public class Init {
          */
         User user = new User("Medewerker@mail.com", "1234");
         userService.insertUser(user);
-
+        /*
         Journey j1 = new Journey(1L);
         Journey j2 = new Journey(2L);
         TransLocation loc1 = new TransLocation(51.855305, 9.623518, "654161", "31");
@@ -125,6 +125,6 @@ public class Init {
         subInvoiceService.insertSubInvoice(inv2);
 
         vehicleService.insertVehicle(veh1);
-        vehicleService.insertVehicle(veh2);
+        vehicleService.insertVehicle(veh2);*/
     }
 }
