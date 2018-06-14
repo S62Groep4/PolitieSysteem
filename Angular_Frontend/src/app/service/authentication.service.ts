@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {UserLogin} from './user-login';
+import {UserLogin} from '../user-login';
 import {tokenNotExpired} from 'angular2-jwt/angular2-jwt';
 import {Observable} from 'rxjs/Observable';
 import {print} from 'util';

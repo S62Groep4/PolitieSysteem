@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Translocation} from './models/translocation-object';
 import {Subject} from 'rxjs/Subject';
 import {HttpClient} from '@angular/common/http';
-import {WebsocketService} from './websocket.service';
+import {WebsocketService} from './service/websocket.service';
 
 @Injectable()
 export class TranslocationService {

@@ -1,14 +1,24 @@
 package service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.Journey;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.User;
 import domain.Vehicle;
+import domain.VehicleEuropol;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -32,6 +42,9 @@ public class Init {
 
     @Inject
     UserService userService;
+
+    @Inject
+    VehicleEuropolService vehicleEuropolService;
 
     @PostConstruct
     public void init() {
@@ -72,6 +85,7 @@ public class Init {
         //||     PERSISTING DOMAIN OBJECTS       ||
         //|||||||||||||||||||||||||||||||||||||||||
          */
+ /*
         User user = new User("Medewerker@mail.com", "1234");
         userService.insertUser(user);
 
@@ -126,5 +140,48 @@ public class Init {
 
         vehicleService.insertVehicle(veh1);
         vehicleService.insertVehicle(veh2);
+
+        // Rerieve vehicles from Europol system
+         */
+        getStolenVehicles();
+    }
+
+    public void getStolenVehicles() {
+        try {
+            URL url = new URL("http://192.168.24.101:8000/api/v2/vehicles/?originCountry=DE");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + conn.getResponseCode());
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    (conn.getInputStream())));
+
+            String output;
+            VehicleEuropol[] stolenVehicles = null;
+            ObjectMapper objectMapper = new ObjectMapper();
+            while ((output = br.readLine()) != null) {
+                stolenVehicles = objectMapper.readValue(output, VehicleEuropol[].class);
+            }
+
+            for (int i = 0; i < stolenVehicles.length; i++) {
+                vehicleEuropolService.insertStolenVehicle(stolenVehicles[i]);
+            }
+
+            conn.disconnect();
+
+        } catch (MalformedURLException e) {
+
+            e.printStackTrace();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        }
     }
 }

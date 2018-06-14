@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {RequestOptions, Headers} from '@angular/http';
-import {Vehicle} from './models/vehicle-object';
+import {Vehicle} from '../models/vehicle-object';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {RegisterLicensePlateDTO} from './models/registerLicensePlateDTO-object';
-import {SubInvoice} from './models/subinvoice-object';
-import {Journey} from './models/journey-object';
-import {Translocation} from './models/translocation-object';
-import {Person} from './models/person-object';
+import {RegisterLicensePlateDTO} from '../models/registerLicensePlateDTO-object';
+import {SubInvoice} from '../models/subinvoice-object';
+import {Journey} from '../models/journey-object';
+import {Translocation} from '../models/translocation-object';
+import {Person} from '../models/person-object';
 
 @Injectable()
 export class VehicleService {
