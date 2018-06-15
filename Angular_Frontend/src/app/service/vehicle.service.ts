@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {RequestOptions, Headers} from '@angular/http';
-import {Vehicle} from './models/vehicle-object';
+import {Vehicle} from '../models/vehicle-object';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {RegisterLicensePlateDTO} from './models/registerLicensePlateDTO-object';
-import {SubInvoice} from './models/subinvoice-object';
-import {Journey} from './models/journey-object';
-import {Translocation} from './models/translocation-object';
-import {Person} from './models/person-object';
+import {RegisterLicensePlateDTO} from '../models/registerLicensePlateDTO-object';
+import {SubInvoice} from '../models/subinvoice-object';
+import {Journey} from '../models/journey-object';
+import {Translocation} from '../models/translocation-object';
+import {Person} from '../models/person-object';
+import {VehicleEuropol} from "../models/VehicleEuropol";
 
 @Injectable()
 export class VehicleService {
@@ -49,7 +50,13 @@ export class VehicleService {
   insertVehicle(vehicle: String): Observable<any> {
     const newVehicle = new RegisterLicensePlateDTO(vehicle, vehicle);
     const header = {headers: new HttpHeaders({'Content-type': 'application/json'})};
-    return this.http.post(this.URI_POLITIE_SYSTEEM + 'vehicles', newVehicle, header);
+    return this.http.post(this.URI_POLITIE_SYSTEEM + 'stolenvehicles/eurpol', newVehicle, header);
+  }
+
+  removeVehicle(vehicle: String): Observable<any> {
+    const newVehicle = new VehicleEuropol(null, vehicle, null, null);
+    const header = {headers: new HttpHeaders({'Content-type': 'application/json'})};
+    return this.http.post(this.URI_POLITIE_SYSTEEM + 'stolenvehicles/remove', newVehicle, header);
   }
 
   searchCarByLicensePlate(licencePlate: String): Observable<Vehicle[]> {

@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {VehicleService} from '../vehicle.service';
+import {VehicleService} from '../service/vehicle.service';
 import {Vehicle} from '../models/vehicle-object';
 import {SubInvoice} from '../models/subinvoice-object';
 import {Journey} from '../models/journey-object';
 import {Translocation} from '../models/translocation-object';
 import {Person} from '../models/person-object';
-import {WebsocketService} from '../websocket.service';
+import {WebsocketService} from '../service/websocket.service';
 import {TranslocationService} from '../translocation.service';
-import {EuropolService} from '../europol.service';
+import {EuropolService} from '../service/europol.service';
 import {VehicleEuropol} from "../models/VehicleEuropol";
 
 @Component({
@@ -74,6 +74,15 @@ export class RegistrationComponent implements OnInit {
   insertVehicle() {
     this.vehicleService.insertVehicle(this.model.hashedLicensePlate)
       .subscribe(vehicle => {
+        this.getStolenVehicles();
+        this.reloadPage();
+      });
+  }
+
+  removeVehicle() {
+    this.vehicleService.removeVehicle(this.model.hashedLicensePlate)
+      .subscribe(vehicle => {
+        this.getStolenVehicles();
         this.reloadPage();
       });
   }

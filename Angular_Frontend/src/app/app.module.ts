@@ -7,10 +7,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component.';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './auth-guard.service';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from './service/authentication.service';
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {VehicleService} from './vehicle.service';
+import {VehicleService} from './service/vehicle.service';
 import {AgmCoreModule} from '@agm/core';
 
 const appRoutes: Routes = [

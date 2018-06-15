@@ -33,7 +33,7 @@ public class VehicleResource {
 
     @Inject
     VehicleService vehicleService;
-
+    
     @POST
     public Response insertVehicle(VehicleDTO vehicle) {
         Vehicle vehicleToÍnsert = DtoToDomain.VEHICLE_LICENCEPLATE_DTO_TO_DOMAIN(vehicle);
