@@ -5,6 +5,7 @@
  */
 package rest;
 
+import domain.Vehicle;
 import domain.VehicleEuropol;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -20,6 +21,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import service.VehicleEuropolService;
+import service.VehicleService;
 
 /**
  *
@@ -33,6 +35,9 @@ public class VehicleEuropolRest {
 
     @Inject
     VehicleEuropolService VehicleEuropolService;
+    
+    @Inject
+    VehicleService vehicleService;
 
     @GET
     public List<VehicleEuropol> getStolenVehicles() throws PersistenceException {
@@ -49,13 +54,20 @@ public class VehicleEuropolRest {
     public Boolean insertStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
         return VehicleEuropolService.insertStolenVehicle(vehicleEuropol);
     }
+    
+    @POST
+    @Path("eurpol")
+    public Vehicle insertStolenVehicleEuropol(Vehicle vehicle) throws PersistenceException {
+        return vehicleService.insertVehicle(vehicle);
+    }
 
     @PUT
     public Boolean updateStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
         return VehicleEuropolService.updateStolenVehicle(vehicleEuropol);
     }
 
-    @DELETE
+    @POST
+    @Path("remove")
     public Boolean removeStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
         return VehicleEuropolService.removeStolenVehicle(vehicleEuropol);
     }

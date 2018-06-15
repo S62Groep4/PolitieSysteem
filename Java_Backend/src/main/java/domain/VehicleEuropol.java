@@ -24,7 +24,8 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name = "VehicleEuropol.getStolenVehicles", query = "SELECT v FROM VehicleEuropol v")
     ,
-    @NamedQuery(name = "VehicleEuropol.findStolenVehicle", query = "SELECT v FROM VehicleEuropol v WHERE v.id = :id")
+    @NamedQuery(name = "VehicleEuropol.findStolenVehicle", query = "SELECT v FROM VehicleEuropol v WHERE v.id = :id"),
+    @NamedQuery(name = "VehicleEuropol.removeStolenVehicle", query = "DELETE FROM VehicleEuropol WHERE licensePlate = :licensePlate")
 })
 public class VehicleEuropol implements Serializable {
 
@@ -60,11 +61,11 @@ public class VehicleEuropol implements Serializable {
         this.url = url;
     }
 
-    public String getHashedLicensePlate() {
+    public String getLicensePlate() {
         return licensePlate;
     }
 
-    public void setHashedLicensePlate(String licensePlate) {
+    public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
     }
 

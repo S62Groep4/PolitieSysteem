@@ -46,7 +46,8 @@ public class VehicleEuropolDAOImpl implements VehicleEuropolDAO{
 
     @Override
     public Boolean removeStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
-        em.remove(vehicleEuropol);
+        em.createNamedQuery("VehicleEuropol.removeStolenVehicle").setParameter("licensePlate", vehicleEuropol.getLicensePlate());
+        //em.remove(vehicleEuropol);
         return true;
     }
     

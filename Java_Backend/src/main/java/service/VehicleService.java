@@ -1,14 +1,18 @@
 package service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.VehicleDAO;
+import dao.VehicleEuropolDAO;
 import domain.Journey;
 import domain.SubInvoice;
 import domain.Vehicle;
 import domain.VehicleEuropol;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,6 +30,9 @@ public class VehicleService {
 
     @Inject
     VehicleDAO vehicleDao;
+    
+    @Inject
+    VehicleEuropolDAO vehicleEuropolDAO;
 
     private static final Logger LOGGER = Logger.getLogger(VehicleService.class.getName());
 
@@ -97,12 +104,13 @@ public class VehicleService {
     public Vehicle insertVehicle(Vehicle vehicle) throws PersistenceException {
         try {
             VehicleEuropol stolenVehicle = new VehicleEuropol();
-            stolenVehicle.setHashedLicensePlate(vehicle.getLicencePlate());
+            stolenVehicle.setLicensePlate(vehicle.getLicencePlate());
             stolenVehicle.setOriginCountry("DE");
-            stolenVehicle.setSerialNumber("Random serial number");
-            stolenVehicle.setUrl("Fake url");
+            stolenVehicle.setSerialNumber("Testing Serial number");//"c99459ba-4aea-4eac-bd3f-a5f4673ab3cd");
+            stolenVehicle.setUrl("Testing url");
             addVehicleToEuropol(stolenVehicle);
-            return vehicleDao.insertVehicle(vehicle);
+            vehicleEuropolDAO.insertStolenVehicle(stolenVehicle);
+            return null;//vehicleDao.insertVehicle(vehicle);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertVehicle operation; {0}", pe.getMessage());
             return null;
@@ -121,9 +129,9 @@ public class VehicleService {
             con.setRequestProperty("Content-type", "application/json");
 
             String urlParameters = "{\"url\":\"" + stolenVehicle.getUrl()
-                    + "\",\"licensePlate\":\"" + stolenVehicle.getHashedLicensePlate()+ ""
-                    + "\",\"serialNumber\":\"" + stolenVehicle.getSerialNumber()+ ""
-                    + "\",\"originCountry\":\"" + stolenVehicle.getOriginCountry()+ "\"}";
+                    + "\",\"licensePlate\":\"" + stolenVehicle.getLicensePlate() + ""
+                    + "\",\"serialNumber\":\"" + stolenVehicle.getSerialNumber() + ""
+                    + "\",\"originCountry\":\"" + stolenVehicle.getOriginCountry() + "\"}";
 
             // Send post request
             con.setDoOutput(true);
