@@ -12,7 +12,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -45,9 +44,9 @@ public class VehicleEuropolRest {
     }
 
     @GET
-    @Path("{id}")
-    public VehicleEuropol findStolenVehicle(@PathParam("id") Integer id) throws PersistenceException {
-        return VehicleEuropolService.findStolenVehicle(id);
+    @Path("{licensePlate}")
+    public VehicleEuropol findStolenVehicle(@PathParam("licensePlate") String licensePlate) throws PersistenceException {
+        return VehicleEuropolService.findStolenVehicle(licensePlate);
     }
 
     @POST
@@ -57,8 +56,8 @@ public class VehicleEuropolRest {
     
     @POST
     @Path("eurpol")
-    public Vehicle insertStolenVehicleEuropol(Vehicle vehicle) throws PersistenceException {
-        return vehicleService.insertVehicle(vehicle);
+    public Boolean insertStolenVehicleEuropol(VehicleEuropol vehicleEuropol) throws PersistenceException {
+        return VehicleEuropolService.insertStolenEuropolVehicle(vehicleEuropol);
     }
 
     @PUT

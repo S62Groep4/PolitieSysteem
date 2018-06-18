@@ -36,6 +36,11 @@
         <input type="text" class="form-control" id="licencePlate" name="licencePlate" required minlength="3"
                placeholder="nummernschild..."
                [(ngModel)]="model.hashedLicensePlate" #licencePlate="ngModel" required/>
+        <br>
+        <label for="licencePlate">Serial number</label>
+        <input type="text" class="form-control" id="serialNumber" name="serialNumber" required minlength="3"
+               placeholder="Serial number..."
+               [(ngModel)]="model.serialNumber" #licencePlate="ngModel" required/>
         <div *ngIf="licencePlate.invalid" class="alert alert-warning">
           <p>Ein Nummernschild ausfüllen</p>
         </div>

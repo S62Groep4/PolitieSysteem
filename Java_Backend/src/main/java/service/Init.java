@@ -1,11 +1,7 @@
 package service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import domain.Journey;
-import domain.SubInvoice;
-import domain.TransLocation;
 import domain.User;
-import domain.Vehicle;
 import domain.VehicleEuropol;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,8 +13,6 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -38,9 +32,6 @@ public class Init {
     SubInvoiceService subInvoiceService;
 
     @Inject
-    JourneyService journeyService;
-
-    @Inject
     UserService userService;
 
     @Inject
@@ -49,6 +40,13 @@ public class Init {
     @PostConstruct
     public void init() {
         getStolenVehicles();
+        createAccount();
+    }
+    
+    public void createAccount() {
+        User user = new User("Medewerker@mail.com", "1234");
+        
+        userService.insertUser(user);
     }
 
     public void getStolenVehicles() {
@@ -76,17 +74,11 @@ public class Init {
             for (int i = 0; i < stolenVehicles.length; i++) {
                 vehicleEuropolService.insertStolenVehicle(stolenVehicles[i]);
             }
-
             conn.disconnect();
-
         } catch (MalformedURLException e) {
-
             e.printStackTrace();
-
         } catch (IOException e) {
-
             e.printStackTrace();
-
         }
     }
 }

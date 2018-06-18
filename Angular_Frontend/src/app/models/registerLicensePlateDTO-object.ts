@@ -1,18 +1,20 @@
 export class RegisterLicensePlateDTO {
-  public licencePlate: String;
+  public licensePlate: String;
   public hashedLicensePlate: String;
+  public serialNumber: String;
 
-  constructor(licencePlate: String, hashedLicensePlate: String) {
-    this.licencePlate = licencePlate;
+  constructor(licensePlate: String, hashedLicensePlate: String, serialNumber: String) {
+    this.licensePlate = licensePlate;
     this.hashedLicensePlate = hashedLicensePlate;
+    this.serialNumber = serialNumber;
   }
 
   setLicencePlate(licencePlate: String) {
-    this.licencePlate = licencePlate;
+    this.licensePlate = licencePlate;
   }
 
   getLicencePlate() {
-    return this.licencePlate;
+    return this.licensePlate;
   }
 
   setHashedLicensePlate(hashedLicensePlate: String) {
@@ -21,5 +23,13 @@ export class RegisterLicensePlateDTO {
 
   getHashedLicensePlate() {
     return this.hashedLicensePlate;
+  }
+
+  setSerialNumber(serialNumber: String) {
+    this.serialNumber = serialNumber;
+  }
+
+  getSerialNumber() {
+    return this.serialNumber;
   }
 }

@@ -17,7 +17,7 @@ public interface VehicleEuropolDAO {
 
     List<VehicleEuropol> getStolenVehicles() throws PersistenceException;
 
-    VehicleEuropol findStolenVehicle(Integer id) throws PersistenceException;
+    VehicleEuropol findStolenVehicle(String licensePlate) throws PersistenceException;
 
     Boolean insertStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException;
 
