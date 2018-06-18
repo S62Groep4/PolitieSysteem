@@ -15,6 +15,8 @@ import java.net.URL;
 import domain.Journey;
 import domain.SubInvoice;
 import domain.Vehicle;
+import websocket.WSEndpoint;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -159,8 +161,5 @@ public class VehicleService {
     }
 
 
-    public void reveiveEvent(@Observes TransLocationDTO transLocation) {
-        String data = transLocation.getSerialNumber();
-        // do some work
-    }
+
 }
