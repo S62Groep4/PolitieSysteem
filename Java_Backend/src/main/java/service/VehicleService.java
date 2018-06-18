@@ -1,6 +1,5 @@
 package service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.VehicleDAO;
 import dao.VehicleEuropolDAO;
 import domain.*;
@@ -13,6 +12,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import domain.Journey;
+import domain.SubInvoice;
+import domain.Vehicle;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +32,7 @@ public class VehicleService {
 
     @Inject
     VehicleDAO vehicleDao;
-    
+
     @Inject
     VehicleEuropolDAO vehicleEuropolDAO;
 
@@ -103,14 +105,7 @@ public class VehicleService {
 
     public Vehicle insertVehicle(Vehicle vehicle) throws PersistenceException {
         try {
-            VehicleEuropol stolenVehicle = new VehicleEuropol();
-            stolenVehicle.setLicensePlate(vehicle.getLicencePlate());
-            stolenVehicle.setOriginCountry("DE");
-            stolenVehicle.setSerialNumber("Testing Serial number");//"c99459ba-4aea-4eac-bd3f-a5f4673ab3cd");
-            stolenVehicle.setUrl("Testing url");
-            addVehicleToEuropol(stolenVehicle);
-            vehicleEuropolDAO.insertStolenVehicle(stolenVehicle);
-            return null;//vehicleDao.insertVehicle(vehicle);
+            return vehicleDao.insertVehicle(vehicle);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertVehicle operation; {0}", pe.getMessage());
             return null;

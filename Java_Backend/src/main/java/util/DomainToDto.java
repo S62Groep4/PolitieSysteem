@@ -4,6 +4,7 @@ import domain.Journey;
 import domain.SubInvoice;
 import domain.TransLocation;
 import domain.Vehicle;
+import domain.VehicleEuropol;
 import dto.*;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -15,8 +16,40 @@ import java.util.List;
  */
 public class DomainToDto {
 
-    //private static String apiUri = "http://192.168.24.91:8282/PolitieSysteem/api/";
-    private static String apiUri = "http://localhost:44760/Java_Backend/api/";
+    private static String apiUri = "http://192.168.24.91:8282/PolitieSysteem/api/";
+    private static String europolUri = "http://192.168.24.101:8000/api/v2/vehicles/";
+    //private static String apiUri = "http://localhost:44760/Java_Backend/api/";
+
+    public static List<VehicleEuropolDTO> VEHICLES_EUROPOL_TODTOS(List<VehicleEuropol> vehicles) {
+        List<VehicleEuropolDTO> vehicleEuropolDTOs = new ArrayList<>();
+        if (vehicles == null || vehicles.isEmpty()) {
+            return vehicleEuropolDTOs;
+        }
+
+        for (VehicleEuropol vehicle : vehicles) {
+            VehicleEuropolDTO vehicleEuropolDTO = new VehicleEuropolDTO(
+                    europolUri + vehicle.getSerialNumber() + "/",
+                    vehicle.getLicensePlate(),
+                    vehicle.getSerialNumber(),
+                    vehicle.getOriginCountry());
+            vehicleEuropolDTOs.add(vehicleEuropolDTO);
+        }
+        return vehicleEuropolDTOs;
+    }
+
+    public static VehicleEuropolDTO VEHICLE_EUROPOL_TODTO(VehicleEuropol vehicle) {
+        VehicleEuropolDTO vehicleDTO = new VehicleEuropolDTO(null, null, null, null);
+        if (vehicle == null) {
+            return vehicleDTO;
+        }
+
+        vehicleDTO = new VehicleEuropolDTO(
+                europolUri + vehicle.getSerialNumber() + "/",
+                vehicle.getLicensePlate(),
+                vehicle.getSerialNumber(),
+                vehicle.getOriginCountry());
+        return vehicleDTO;
+    }
 
     public static List<VehicleDTO> VEHICLESTODTOS(List<Vehicle> vehicles) {
         List<VehicleDTO> vehicleDTOs = new ArrayList<>();

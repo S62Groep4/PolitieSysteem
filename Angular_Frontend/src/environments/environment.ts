@@ -4,5 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  API_POLITIE_URL: 'http://192.168.24.91:8282/Politie/api/',
+  API_ADMINISTRATIE_URL: 'http://localhost:8080/Java_Backend/api/'
 };

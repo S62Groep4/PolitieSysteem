@@ -5,3 +5,15 @@ agm-map {
 .stolen {
   background-color: darkgray;
 }
+
+.hr {
+  background-color: red;
+}
+
+.spacing{
+  margin: 5px;
+}
+
+.visibleCar:hover .overlay {
+  opacity: 1;
+}

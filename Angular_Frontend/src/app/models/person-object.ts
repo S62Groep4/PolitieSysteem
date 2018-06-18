@@ -1,15 +1,15 @@
-import {Vehicle} from './vehicle-object';
+import {Address} from './Address';
 
 export class Person {
   public id: Number;
-  public firstName: String;
-  public lastName: String;
-  public vehicles: Vehicle[];
+  public firstName: string;
+  public lastName: string;
+  public addressUri: Address;
 
-  constructor(id: Number, firstName: String, lastName: String){//}, vehicles: Vehicle[]) {
+  constructor(id: Number, addressUri: Address, firstName: string, lastName: string) {
     this.id = id;
+    this.addressUri = addressUri;
     this.firstName = firstName;
     this.lastName = lastName;
-    //this.vehicles = vehicles;
   }
 }
