@@ -10,13 +10,14 @@ import {SubInvoice} from '../models/subinvoice-object';
 import {Journey} from '../models/journey-object';
 import {Translocation} from '../models/translocation-object';
 import {Person} from '../models/person-object';
-import {VehicleEuropol} from "../models/VehicleEuropol";
+import {VehicleEuropol} from '../models/VehicleEuropol';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class VehicleService {
 
-  URI_REKENING_ADMINISTRATIE_SYSTEEM = 'http://localhost:8080/Java_Backend/api/';
-  URI_POLITIE_SYSTEEM = 'http://localhost:44760/Java_Backend/api/';
+  URI_REKENING_ADMINISTRATIE_SYSTEEM = environment.API_ADMINISTRATIE_URL;
+  URI_POLITIE_SYSTEEM = environment.API_POLITIE_URL;
 
   constructor(private http: HttpClient, private router: Router) {
 

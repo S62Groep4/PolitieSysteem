@@ -3,14 +3,14 @@ export class Translocation {
   public dateTime: String;
   public lat: Number;
   public lon: Number;
+  public carTrackerId
   public serialNumber: String;
-  public carlocation: String;
 
-  constructor(countryCode: String, dateTime: String, lat: Number, lon: Number, serialNumber: String) {
+  constructor(countryCode: String, dateTime: String, lat: Number, lon: Number, carTrackerId: String) {
     this.countryCode = countryCode;
     this.dateTime = dateTime;
     this.lat = lat;
     this.lon = lon;
-    this.serialNumber = serialNumber;
+    this.carTrackerId = carTrackerId;
   }
 }
