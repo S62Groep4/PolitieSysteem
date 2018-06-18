@@ -10,8 +10,8 @@ import javax.ws.rs.core.MediaType;
 @Stateless
 public class RegisteratieCommunication {
 
-    private final String remoteServer = "http://localhost:8080";
-    private final String extention = "RegistratieSysteem-1.0-SNAPSHOT";
+    private final String remoteServer = "http://192.168.24.91:8686";
+    private final String extention = "RegistratieSysteem";
 
     public void AddNewStolenVehicle(String id) {
         Client client = ClientBuilder.newClient();
