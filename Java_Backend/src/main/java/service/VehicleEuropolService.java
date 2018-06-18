@@ -35,27 +35,26 @@ public class VehicleEuropolService {
         return vehicleEuropolDAO.findStolenVehicle(licensePlate);
     }
 
-    public Boolean insertStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
+    public VehicleEuropol insertStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
         return vehicleEuropolDAO.insertStolenVehicle(vehicleEuropol);
     }
 
-    public Boolean insertStolenEuropolVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
+    public VehicleEuropol insertStolenEuropolVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
         vehicleEuropol.setOriginCountry("DE");
         String url = "http://192.168.24.101:8000/api/v2/vehicles/" + vehicleEuropol.getSerialNumber() + "/";
         vehicleEuropol.setUrl(url);
 
         addVehicleToEuropol(vehicleEuropol);
-        vehicleEuropolDAO.insertStolenVehicle(vehicleEuropol);
-
-        return true;
+        
+        return vehicleEuropolDAO.insertStolenVehicle(vehicleEuropol);
     }
 
-    public Boolean updateStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
+    public VehicleEuropol updateStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
         return vehicleEuropolDAO.updateStolenVehicle(vehicleEuropol);
     }
 
-    public Boolean removeStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
-        return vehicleEuropolDAO.removeStolenVehicle(vehicleEuropol);
+    public void removeStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
+        vehicleEuropolDAO.removeStolenVehicle(vehicleEuropol);
     }
 
     public void addVehicleToEuropol(VehicleEuropol stolenVehicle) {

@@ -19,9 +19,9 @@ public interface VehicleEuropolDAO {
 
     VehicleEuropol findStolenVehicle(String licensePlate) throws PersistenceException;
 
-    Boolean insertStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException;
+    VehicleEuropol insertStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException;
 
-    Boolean updateStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException;
+    VehicleEuropol updateStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException;
 
-    Boolean removeStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException;
+    void removeStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException;
 }

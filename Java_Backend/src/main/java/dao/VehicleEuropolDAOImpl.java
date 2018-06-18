@@ -37,23 +37,26 @@ public class VehicleEuropolDAOImpl implements VehicleEuropolDAO {
     }
 
     @Override
-    public Boolean insertStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
-        em.persist(vehicleEuropol);
-        return true;
+    public VehicleEuropol insertStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
+        try {
+            em.persist(vehicleEuropol);
+            return vehicleEuropol;
+        } catch (PersistenceException ex) {
+            ex.getMessage();
+            return null;
+        }
     }
 
     @Override
-    public Boolean updateStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
-        em.merge(vehicleEuropol);
-        return true;
+    public VehicleEuropol updateStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
+        return em.merge(vehicleEuropol);
     }
 
     @Override
-    public Boolean removeStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
+    public void removeStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
         VehicleEuropol tempVehicle = (VehicleEuropol) em.createNamedQuery("VehicleEuropol.findStolenVehicle").setParameter("licensePlate", vehicleEuropol.getLicensePlate()).getSingleResult();//em.find(VehicleEuropol.class, vehicleEuropol.getLicensePlate());
         removeVehicleFromEuropol(tempVehicle);
         em.remove(tempVehicle);
-        return true;
     }
 
     public void removeVehicleFromEuropol(VehicleEuropol stolenVehicle) {
@@ -64,7 +67,6 @@ public class VehicleEuropolDAOImpl implements VehicleEuropolDAO {
             httpCon.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
             //System.out.println("URL info: " + url);
-
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(httpCon.getInputStream()));
             String inputLine;

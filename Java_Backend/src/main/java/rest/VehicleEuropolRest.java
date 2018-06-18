@@ -7,6 +7,7 @@ package rest;
 
 import domain.Vehicle;
 import domain.VehicleEuropol;
+import dto.VehicleEuropolDTO;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -19,8 +20,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import service.VehicleEuropolService;
 import service.VehicleService;
+import util.DomainToDto;
+import util.DtoToDomain;
 
 /**
  *
@@ -34,40 +38,49 @@ public class VehicleEuropolRest {
 
     @Inject
     VehicleEuropolService VehicleEuropolService;
-    
+
     @Inject
     VehicleService vehicleService;
 
     @GET
-    public List<VehicleEuropol> getStolenVehicles() throws PersistenceException {
-        return VehicleEuropolService.getStolenVehicles();
+    public Response getStolenVehicles() throws PersistenceException {
+        List<VehicleEuropolDTO> dtos = DomainToDto.VEHICLES_EUROPOL_TODTOS(VehicleEuropolService.getStolenVehicles());
+        return Response.ok(dtos).build();
     }
 
     @GET
     @Path("{licensePlate}")
-    public VehicleEuropol findStolenVehicle(@PathParam("licensePlate") String licensePlate) throws PersistenceException {
-        return VehicleEuropolService.findStolenVehicle(licensePlate);
+    public Response findStolenVehicle(@PathParam("licensePlate") String licensePlate) throws PersistenceException {
+        VehicleEuropolDTO dto = DomainToDto.VEHICLE_EUROPOL_TODTO(VehicleEuropolService.findStolenVehicle(licensePlate));
+        return Response.ok(dto).build();
     }
 
     @POST
-    public Boolean insertStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
-        return VehicleEuropolService.insertStolenVehicle(vehicleEuropol);
+    public Response insertStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
+        VehicleEuropol vehicleToInsert = DtoToDomain.VEHICLE_EUROPOL_DTO_TO_DOMAIN(vehicleEuropol);
+        VehicleEuropolDTO dto = DomainToDto.VEHICLE_EUROPOL_TODTO(VehicleEuropolService.insertStolenVehicle(vehicleToInsert));
+        return Response.ok(dto).build();
     }
-    
+
     @POST
     @Path("eurpol")
-    public Boolean insertStolenVehicleEuropol(VehicleEuropol vehicleEuropol) throws PersistenceException {
-        return VehicleEuropolService.insertStolenEuropolVehicle(vehicleEuropol);
+    public Response insertStolenVehicleEuropol(VehicleEuropol vehicleEuropol) throws PersistenceException {
+        VehicleEuropol vehicleToInsert = DtoToDomain.VEHICLE_EUROPOL_DTO_TO_DOMAIN(vehicleEuropol);
+        VehicleEuropolDTO dto = DomainToDto.VEHICLE_EUROPOL_TODTO(VehicleEuropolService.insertStolenEuropolVehicle(vehicleToInsert));
+        return Response.ok(dto).build();
     }
 
     @PUT
-    public Boolean updateStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
-        return VehicleEuropolService.updateStolenVehicle(vehicleEuropol);
+    public Response updateStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
+        VehicleEuropol vehicleToUpdate = DtoToDomain.VEHICLE_EUROPOL_DTO_TO_DOMAIN(vehicleEuropol);
+        VehicleEuropolDTO dto = DomainToDto.VEHICLE_EUROPOL_TODTO(VehicleEuropolService.updateStolenVehicle(vehicleToUpdate));
+        return Response.ok(dto).build();
     }
 
     @POST
     @Path("remove")
-    public Boolean removeStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
-        return VehicleEuropolService.removeStolenVehicle(vehicleEuropol);
+    public Response removeStolenVehicle(VehicleEuropol vehicleEuropol) throws PersistenceException {
+        VehicleEuropolService.removeStolenVehicle(vehicleEuropol);
+        return Response.ok().build();
     }
 }
