@@ -1,21 +1,24 @@
 
 import {SubInvoice} from './subinvoice-object';
+import {Person} from './person-object';
 
 export class Vehicle {
-  public licencePlate: String
-  public hashedLicensePlate: String;
-  public journeyUri: String;
+  public licencePlate: string
+  public hashedLicensePlate: string;
+  public journeyUri: string;
   public subInvoiceUri: SubInvoice[];
+  public ownerUri: Person;
 
 
-  constructor(licencePlate: String, hashedLicensePlate: String, journeyUri: String, subInvoiceUri: SubInvoice[]) {
+  constructor(licencePlate: string, hashedLicensePlate: string, journeyUri: string, ownerUri: Person, subInvoiceUri: SubInvoice[]) {
     this.licencePlate = licencePlate;
     this.hashedLicensePlate = hashedLicensePlate;
     this.journeyUri = journeyUri;
+    this.ownerUri = ownerUri;
     this.subInvoiceUri = subInvoiceUri;
   }
 
-  setLicencePlate(licencePlate: String) {
+  setLicencePlate(licencePlate: string) {
     this.licencePlate = licencePlate;
   }
 
@@ -23,7 +26,7 @@ export class Vehicle {
     return this.licencePlate;
   }
 
-  setHashedLicenseplate(hashedLicensePlate: String) {
+  setHashedLicenseplate(hashedLicensePlate: string) {
     this.hashedLicensePlate = hashedLicensePlate;
   }
 
@@ -31,11 +34,11 @@ export class Vehicle {
     return this.hashedLicensePlate;
   }
 
-  setJourneyUrl(journeyUri: String) {
+  setJourneyUrl(journeyUri: string) {
     this.journeyUri = journeyUri;
   }
 
-  setJourneys(journeyUri: String) {
+  setJourneys(journeyUri: string) {
     this.journeyUri = journeyUri;
   }
 

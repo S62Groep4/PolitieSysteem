@@ -13,3 +13,7 @@ agm-map {
 .spacing{
   margin: 5px;
 }
+
+.visibleCar:hover .overlay {
+  opacity: 1;
+}

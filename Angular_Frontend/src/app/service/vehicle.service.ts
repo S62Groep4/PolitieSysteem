@@ -43,24 +43,24 @@ export class VehicleService {
       .map(response => response as Translocation[]);
   }
 
-  getPersonByLicenceplate(unhashedLicenceplate: String): Observable<Person> {
-    return this.http.get(this.URI_REKENING_ADMINISTRATIE_SYSTEEM + 'persons/licenceplate/' + unhashedLicenceplate)
+  getPersonByLicenceplate(uri: string): Observable<Person> {
+    return this.http.get(uri)
       .map(response => response as Person);
   }
 
-  insertVehicle(vehicle: String, serialNumber: String): Observable<any> {
+  insertVehicle(vehicle: string, serialNumber: string): Observable<any> {
     const newVehicle = new RegisterLicensePlateDTO(vehicle, vehicle, serialNumber, 'DE');
     const header = {headers: new HttpHeaders({'Content-type': 'application/json'})};
     return this.http.post(this.URI_POLITIE_SYSTEEM + 'stolenvehicles/eurpol', newVehicle, header);
   }
 
-  removeVehicle(vehicle: String): Observable<any> {
+  removeVehicle(vehicle: string): Observable<any> {
     const newVehicle = new VehicleEuropol(null, vehicle, null, null);
     const header = {headers: new HttpHeaders({'Content-type': 'application/json'})};
     return this.http.post(this.URI_POLITIE_SYSTEEM + 'stolenvehicles/remove', newVehicle, header);
   }
 
-  searchCarByLicensePlate(licencePlate: String): Observable<Vehicle[]> {
+  searchCarByLicensePlate(licencePlate: string): Observable<Vehicle[]> {
     return this.http.get(this.URI_POLITIE_SYSTEEM + 'vehicles/searchvehicles/' + licencePlate)
       .map(response => response as Vehicle[]);
   }

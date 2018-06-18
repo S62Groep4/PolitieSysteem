@@ -1,11 +1,11 @@
 
 export class VehicleEuropol {
   public url: String;
-  public licensePlate: String;
-  public serialNumber: String;
-  public originCountry: String;
+  public licensePlate: string;
+  public serialNumber: string;
+  public originCountry: string;
 
-  constructor(url: String, licensePlate: String, serialNumber: String, originCountry: String) {
+  constructor(url: string, licensePlate: string, serialNumber: string, originCountry: string) {
     this.url = url;
     this.licensePlate = licensePlate;
     this.serialNumber = serialNumber;

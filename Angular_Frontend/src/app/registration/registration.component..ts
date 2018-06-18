@@ -29,6 +29,7 @@ export class RegistrationComponent implements OnInit {
   searchVehicle: Vehicle[];
   subInvoices: SubInvoice[];
   journeys: Journey[];
+  journeyHolder: Journey[];
   translocations: Translocation[];
   transLocationsLive: Translocation[];
   person: Person;
@@ -60,15 +61,24 @@ export class RegistrationComponent implements OnInit {
   }
 
   getJourneys(uri: string) {
-    this.vehicleService.getJourneys(uri).subscribe(journeys => this.journeys = journeys);
+    this.vehicleService.getJourneys(uri).subscribe(journeys => {
+      this.journeys = journeys;
+      this.journeyHolder = journeys;
+
+      for (const i in this.journeyHolder) {
+        console.log(this.journeyHolder[i]);
+        this.getTranslocations(this.journeyHolder[i].translocationUri.toString());
+      }
+      this.selectCarHistroyOn();
+    });
   }
 
   getTranslocations(uri: string) {
     this.vehicleService.getTranslocations(uri).subscribe(translocations => this.translocations = translocations);
   }
 
-  getPersonByLicenceplate(unhashedLicenceplate: String) {
-    this.vehicleService.getPersonByLicenceplate(unhashedLicenceplate).subscribe(person => this.person = person);
+  getPersonByLicenceplate(uri: string) {
+    this.vehicleService.getPersonByLicenceplate(uri).subscribe(person => this.person = person);
   }
 
   insertVehicle() {
@@ -87,7 +97,7 @@ export class RegistrationComponent implements OnInit {
       });
   }
 
-  searchCarByLicensePlate(licencePlate: String) {
+  searchCarByLicensePlate(licencePlate: string) {
     if (licencePlate.length > 2) {
       this.vehicleService.searchCarByLicensePlate(licencePlate).subscribe(vehicle => this.searchVehicle = vehicle);
     } else {
@@ -121,5 +131,18 @@ export class RegistrationComponent implements OnInit {
   // Retrieve stolen vehicles from Europol system
   getStolenVehicles() {
     this.europolService.getStolenVehicles().subscribe(stolenVehicles => this.stolenVehicles = stolenVehicles);
+  }
+
+  trackCarInfo(vehicle: Vehicle) {
+
+    this.getJourneys(vehicle.journeyUri);
+    if (this.journeyHolder) {
+      for (const i in this.journeyHolder) {
+        console.log(this.journeyHolder[i]);
+        this.getTranslocations(this.journeyHolder[i].translocationUri.toString());
+      }
+      this.selectCarHistroyOn();
+    }
+
   }
 }
