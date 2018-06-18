@@ -10,13 +10,14 @@ import {SubInvoice} from '../models/subinvoice-object';
 import {Journey} from '../models/journey-object';
 import {Translocation} from '../models/translocation-object';
 import {Person} from '../models/person-object';
-import {VehicleEuropol} from "../models/VehicleEuropol";
+import {VehicleEuropol} from '../models/VehicleEuropol';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class VehicleService {
 
-  URI_REKENING_ADMINISTRATIE_SYSTEEM = 'http://localhost:8080/Java_Backend/api/';
-  URI_POLITIE_SYSTEEM = 'http://localhost:44760/Java_Backend/api/';
+  URI_REKENING_ADMINISTRATIE_SYSTEEM = environment.API_ADMINISTRATIE_URL;
+  URI_POLITIE_SYSTEEM = environment.API_POLITIE_URL;
 
   constructor(private http: HttpClient, private router: Router) {
 
@@ -42,24 +43,24 @@ export class VehicleService {
       .map(response => response as Translocation[]);
   }
 
-  getPersonByLicenceplate(unhashedLicenceplate: String): Observable<Person> {
-    return this.http.get(this.URI_REKENING_ADMINISTRATIE_SYSTEEM + 'persons/licenceplate/' + unhashedLicenceplate)
+  getPersonByLicenceplate(uri: string): Observable<Person> {
+    return this.http.get(uri)
       .map(response => response as Person);
   }
 
-  insertVehicle(vehicle: String, serialNumber: String): Observable<any> {
+  insertVehicle(vehicle: string, serialNumber: string): Observable<any> {
     const newVehicle = new RegisterLicensePlateDTO(vehicle, vehicle, serialNumber, 'DE');
     const header = {headers: new HttpHeaders({'Content-type': 'application/json'})};
     return this.http.post(this.URI_POLITIE_SYSTEEM + 'stolenvehicles/eurpol', newVehicle, header);
   }
 
-  removeVehicle(vehicle: String): Observable<any> {
+  removeVehicle(vehicle: string): Observable<any> {
     const newVehicle = new VehicleEuropol(null, vehicle, null, null);
     const header = {headers: new HttpHeaders({'Content-type': 'application/json'})};
     return this.http.post(this.URI_POLITIE_SYSTEEM + 'stolenvehicles/remove', newVehicle, header);
   }
 
-  searchCarByLicensePlate(licencePlate: String): Observable<Vehicle[]> {
+  searchCarByLicensePlate(licencePlate: string): Observable<Vehicle[]> {
     return this.http.get(this.URI_POLITIE_SYSTEEM + 'vehicles/searchvehicles/' + licencePlate)
       .map(response => response as Vehicle[]);
   }
