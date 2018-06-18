@@ -1,19 +1,10 @@
 package service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.VehicleDAO;
 import dao.VehicleEuropolDAO;
 import domain.Journey;
 import domain.SubInvoice;
 import domain.Vehicle;
-import domain.VehicleEuropol;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +21,7 @@ public class VehicleService {
 
     @Inject
     VehicleDAO vehicleDao;
-    
+
     @Inject
     VehicleEuropolDAO vehicleEuropolDAO;
 
@@ -103,63 +94,10 @@ public class VehicleService {
 
     public Vehicle insertVehicle(Vehicle vehicle) throws PersistenceException {
         try {
-            VehicleEuropol stolenVehicle = new VehicleEuropol();
-            stolenVehicle.setLicensePlate(vehicle.getLicencePlate());
-            stolenVehicle.setOriginCountry("DE");
-            stolenVehicle.setSerialNumber("Testing Serial number");//"c99459ba-4aea-4eac-bd3f-a5f4673ab3cd");
-            stolenVehicle.setUrl("Testing url");
-            addVehicleToEuropol(stolenVehicle);
-            vehicleEuropolDAO.insertStolenVehicle(stolenVehicle);
-            return null;//vehicleDao.insertVehicle(vehicle);
+            return vehicleDao.insertVehicle(vehicle);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertVehicle operation; {0}", pe.getMessage());
             return null;
-        }
-    }
-
-    public void addVehicleToEuropol(VehicleEuropol stolenVehicle) {
-        try {
-
-            String url = "http://192.168.24.101:8000/api/v2/vehicles/";
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-            //add reuqest header
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Content-type", "application/json");
-
-            String urlParameters = "{\"url\":\"" + stolenVehicle.getUrl()
-                    + "\",\"licensePlate\":\"" + stolenVehicle.getLicensePlate() + ""
-                    + "\",\"serialNumber\":\"" + stolenVehicle.getSerialNumber() + ""
-                    + "\",\"originCountry\":\"" + stolenVehicle.getOriginCountry() + "\"}";
-
-            // Send post request
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
-
-            int responseCode = con.getResponseCode();
-            //System.out.println("\nSending 'POST' request to URL : " + url);
-            //System.out.println("Post parameters : " + urlParameters);
-            //System.out.println("Response Code : " + responseCode);
-            System.out.println("Adding stolen vehicle to Europol system");
-
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            //print result
-            System.out.println(response.toString());
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
         }
     }
 }

@@ -72,7 +72,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   insertVehicle() {
-    this.vehicleService.insertVehicle(this.model.hashedLicensePlate)
+    this.vehicleService.insertVehicle(this.model.hashedLicensePlate, this.model.serialNumber)
       .subscribe(vehicle => {
         this.getStolenVehicles();
         this.reloadPage();

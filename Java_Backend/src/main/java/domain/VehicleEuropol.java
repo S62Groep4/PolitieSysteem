@@ -24,7 +24,7 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name = "VehicleEuropol.getStolenVehicles", query = "SELECT v FROM VehicleEuropol v")
     ,
-    @NamedQuery(name = "VehicleEuropol.findStolenVehicle", query = "SELECT v FROM VehicleEuropol v WHERE v.id = :id"),
+    @NamedQuery(name = "VehicleEuropol.findStolenVehicle", query = "SELECT v FROM VehicleEuropol v WHERE v.licensePlate = :licensePlate"),
     @NamedQuery(name = "VehicleEuropol.removeStolenVehicle", query = "DELETE FROM VehicleEuropol WHERE licensePlate = :licensePlate")
 })
 public class VehicleEuropol implements Serializable {

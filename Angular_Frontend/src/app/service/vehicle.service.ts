@@ -47,8 +47,8 @@ export class VehicleService {
       .map(response => response as Person);
   }
 
-  insertVehicle(vehicle: String): Observable<any> {
-    const newVehicle = new RegisterLicensePlateDTO(vehicle, vehicle);
+  insertVehicle(vehicle: String, serialNumber: String): Observable<any> {
+    const newVehicle = new RegisterLicensePlateDTO(vehicle, vehicle, serialNumber, 'DE');
     const header = {headers: new HttpHeaders({'Content-type': 'application/json'})};
     return this.http.post(this.URI_POLITIE_SYSTEEM + 'stolenvehicles/eurpol', newVehicle, header);
   }
