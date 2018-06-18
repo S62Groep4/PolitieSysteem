@@ -3,10 +3,9 @@ package service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.VehicleDAO;
 import dao.VehicleEuropolDAO;
-import domain.Journey;
-import domain.SubInvoice;
-import domain.Vehicle;
-import domain.VehicleEuropol;
+import domain.*;
+import dto.TransLocationDTO;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -18,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
 
@@ -161,5 +161,11 @@ public class VehicleService {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+
+    public void reveiveEvent(@Observes TransLocationDTO transLocation) {
+        String data = transLocation.getSerialNumber();
+        // do some work
     }
 }
