@@ -114,14 +114,15 @@ export class RegistrationComponent implements OnInit {
     this.selectCarLive = false;
   }
 
-  selectCarLiveOn() {
+  selectCarLiveOn(uri: string) {
     this.selectCarLive = true;
     this.selectCarHistroy = false;
-    this.getTranslocationsLive(this.translocationService);
+    this.getTranslocationsLive(uri, this.translocationService);
   }
 
-  getTranslocationsLive(translocationService: TranslocationService) {
+  getTranslocationsLive(vehicleId: String, translocationService: TranslocationService) {
     console.log('Retrieving live locations...')
+    translocationService.CreateWebSocket(vehicleId)
     translocationService.transLocationsLive.subscribe(msg => {
       console.log('Response from websocket: ' + JSON.stringify(msg));
       this.transLocationsLive.unshift(msg);

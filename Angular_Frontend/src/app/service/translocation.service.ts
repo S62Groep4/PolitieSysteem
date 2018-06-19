@@ -10,8 +10,12 @@ export class TranslocationService {
   public transLocationsLive: Subject<Translocation>;
 
   constructor(private http: HttpClient, private websocketService: WebsocketService) {
-    this.transLocationsLive = <Subject<Translocation>>websocketService
-      .connect('ws://localhost:8080/[administration-endpoint-needed]')
+  }
+
+  public CreateWebSocket(vehicleId: String) {
+
+    this.transLocationsLive = <Subject<Translocation>> this.websocketService
+      .connect('ws://192.168.24.91:8282/Politie/serverwsendpoint/' + vehicleId )
       .map((response: MessageEvent): Translocation => {
         const data = JSON.parse(response.data);
         return data;
