@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{title}}</title>
+</head>
+
+<body>
+
+<div class="container-fluid text-center col-md-6">
+  <form>
+    <div class="form-group">
+      <input #tagSearch class="form-control mr-sm-2" type="search" placeholder="Suche auf dem Nummernschild"
+             aria-label="Search"
+             (input)="searchCarByLicensePlate($event.target.value)">
+      <br>
+    </div>
+  </form>
+</div>
+
+<div class="container-fluid text-center text-dark">
+  <hr class="bg-dark">
+  <br>
+  <h3>Auto gefunden</h3>
+  <br>
+
+  <!--Adding a stolen vehicle to Europol-->
+  <div class="container-fluid col-md-6 text-center">
+    <h2>Fügen Sie ein Kennzeichen zur Datenbank hinzu</h2>
+    <form name="form" (ngSubmit)="f.form.valid && insertVehicle()" #f="ngForm" novalidate>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !hashedLicensePlate.valid }">
+        <label for="licencePlate">Nummernschild</label>
+        <input type="text" class="form-control" id="licencePlate" name="licencePlate" required minlength="3"
+               placeholder="nummernschild..."
+               [(ngModel)]="model.hashedLicensePlate" #licencePlate="ngModel" required/>
+        <br>
+        <label for="licencePlate">Serial number</label>
+        <input type="text" class="form-control" id="serialNumber" name="serialNumber" required minlength="3"
+               placeholder="Serial number..."
+               [(ngModel)]="model.serialNumber" #licencePlate="ngModel" required/>
+        <div *ngIf="licencePlate.invalid" class="alert alert-warning">
+          <p>Ein Nummernschild ausfüllen</p>
+        </div>
+        <button class="btn btn-danger col-md-12">Add</button>
+      </div>
+    </form>
+    <br>
+  </div>
+
+  <hr class="bg-dark">
+  <div class="row justify-content-center">
+    <div *ngFor="let vehicle of searchVehicle; let i = index" class="card" style="width: 18rem;">
+      <div class="card-body bg-danger">
+        <i class="fas fa-car fa-7x"></i>
+        <h5 class="card-title">Vehicle</h5>
+        <p>licenceplate: {{vehicle.hashedLicensePlate[i]}}</p>
+        <i class="fas fa-user fa-2x"></i>
+        <button class="btn btn-outline-dark" (click)="getPersonByLicenceplate(vehicle.licencePlate[i])"
+                onclick="document.getElementById('id04').style.display='block'">
+          get owner
+        </button>
+        <p *ngIf="person">
+          owner: {{person.lastName[i]}}, {{person.firstName[i]}}</p>
+        <p>
+          <i class="fas fa-road fa-2x"></i>
+          <button class="btn btn-outline-dark" (click)="getJourneys(vehicle.journeyUri[i])"
+                  onclick="document.getElementById('id01').style.display='block'">
+            journeys
+          </button>
+        </p>
+        <p>
+          <i class="fas fa-file-alt fa-2x"></i>
+          <button class="btn btn-outline-dark" (click)="getSubInvoices(vehicle.subInvoiceUri[i])"
+                  onclick="document.getElementById('id02').style.display='block'">
+            invoices
+          </button>
+        </p>
+        <p>
+          <i class="fas fa-search-plus fa-2x"></i>
+          <button class="btn btn-outline-dark"
+                  onclick="document.getElementById('id03').style.display='block'">
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid text-center text-white">
+  <br>
+  <h2 class="text-dark" *ngIf="vehicles">Autos des Verwaltungssystems: {{vehicles.length}}</h2>
+
+  <div class="row justify-content-center">
+    <div *ngFor="let vehicle of vehicles" class="card" style="width: 18rem;">
+      <div class="card-body bg-dark">
+        <i class="fas fa-car fa-7x"></i>
+        <h5 class="card-title">Vehicle</h5>
+        <p>licenceplate: {{vehicle.hashedLicensePlate}}</p>
+        <i class="fas fa-user fa-2x"></i>
+        <button class="btn btn-outline-light" (click)="getPersonByLicenceplate(vehicle.ownerUri)"
+                onclick="document.getElementById('id04').style.display='block'">
+          get owner
+        </button>
+        <ng-template #noOwner>
+          <p>no owner found</p>
+        </ng-template>
+        <p>
+          <i class="fas fa-road fa-2x"></i>
+          <button class="btn btn-outline-light" (click)="getJourneys(vehicle.journeyUri)"
+                  onclick="document.getElementById('id01').style.display='block'">
+            journeys
+          </button>
+        </p>
+        <p>
+          <i class="fas fa-file-alt fa-2x"></i>
+          <button class="btn btn-outline-light" (click)="getSubInvoices(vehicle.subInvoiceUri)"
+                  onclick="document.getElementById('id02').style.display='block'">
+            invoices
+          </button>
+        </p>
+        <p>
+          <i class="fas fa-search-plus fa-2x"></i>
+          <button class="btn btn-outline-light" (click)="trackCarInfo(vehicle)"
+                  onclick="document.getElementById('id03').style.display='block'">
+            track car
+          </button>
+        </p>
+
+        <!--Person modal-->
+        <!--Journey modal-->
+        <div id="id04" class="w3-modal">
+          <div class="w3-modal-content">
+            <header class="w3-container bg-dark text-center text-white">
+        <span onclick="document.getElementById('id04').style.display='none'"
+              class="w3-button w3-display-topright">&times;</span>
+              <h2>Gefundene personen</h2>
+            </header>
+            <div class="w3-container text-dark">
+              <br>
+              <div *ngIf="person; else noOwner">
+                <i class="fas fa-address-card fa-7x"></i>
+                <p>first name: <b>{{person.firstName}}</b></p>
+                <p>last name: <b>{{person.lastName}}</b></p>
+                <div *ngIf="!person.addressUri; else noAddress">
+                  <p>country: <b>{{person.addressUri.country}}</b></p>
+                  <p>city: <b>{{person.addressUri.city}}</b></p>
+                  <p>zip code: <b>{{person.addressUri.zipCode}}</b></p>
+                  <p>street name: <b>{{person.addressUri.streetName}}</b></p>
+                  <p>street number: <b>{{person.addressUri.streetNumber}}</b></p>
+                </div>
+                <ng-template #noAddress>
+                  <p>country:<b>Not known</b></p>
+                  <p>city:<b>Not known</b></p>
+                  <p>zip code:<b>Not known</b></p>
+                  <p>street name:<b>Not known</b></p>
+                  <p>street number:<b>Not known</b></p>
+                </ng-template>
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--Journey modal-->
+        <div id="id01" class="w3-modal">
+          <div class="w3-modal-content">
+            <header class="w3-container bg-dark text-center text-white">
+        <span onclick="document.getElementById('id01').style.display='none'"
+              class="w3-button w3-display-topright">&times;</span>
+              <h2>Gefundene Reisen</h2>
+            </header>
+            <div class="w3-container text-dark">
+              <br>
+              <div *ngFor="let journey of journeys">
+                <p><i class="fas fa-file-alt fa-2x"></i> invoice number: {{journey.id}} </p>
+                <p><i class="fas fa-road  fa-2x"></i> journeys: {{journeys.length}}</p>
+                <br>
+                <div *ngFor="let translocation of translocations; let i = index">
+                  <div class="row">
+                    <br>
+                    <p class="spacing"><b>#{{i + 1}}</b><i class="fas fa-flag fa-2x fa-2x"></i> Country code:
+                      {{translocation.countryCode}} </p>
+                    <p class="spacing"><i class="fas fa-clock fa-2x"></i> date: {{translocation.dateTime |
+                      date:'short'}}</p>
+                    <p class="spacing"><i class="fas fa-map-marker-alt fa-2x"></i> lat: {{translocation.lat |
+                      number:'1.6-6'}} </p>
+                    <p class="spacing"><i class="fas fa-map-marker-alt fa-2x"></i> lon: {{translocation.lon |
+                      number:'1.6-6'}}</p>
+                    <p class="spacing"><i class="fas fa-id-card fa-2x"></i>Car tracker id:
+                      {{translocation.carTrackerId}}</p>
+                  </div>
+                  <hr class="hr">
+                  <br>
+                </div>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+
+        <!--Subinvoice modal-->
+        <div id="id02" class="w3-modal">
+          <div class="w3-modal-content">
+            <header class="w3-container bg-dark text-center text-white">
+        <span onclick="document.getElementById('id02').style.display='none'"
+              class="w3-button w3-display-topright">&times;</span>
+              <h2>Gefundene Rechnungen</h2>
+            </header>
+            <div class="w3-container text-dark">
+              <div *ngFor="let subinvoice of subInvoices; let i = index">
+                <br>
+                <div class="row">
+                  <p class="spacing"><b>#{{i + 1}}</b><i class="fas fa-file-alt fa-2x"></i> invoice number:
+                    {{subinvoice.invoiceNumber}} </p>
+                  <p class="spacing"><i class="fas fa-flag fa-2x"></i>country code: {{subinvoice.country}}</p>
+                  <p class="spacing"><i class="fas fa-euro-sign fa-2x"></i>price: {{subinvoice.price}}</p>
+                  <p class="spacing"><i class="fas fa-clock fa-2x"></i>date: {{subinvoice.invoiceDate | date: 'short'}}
+                  </p>
+                  <p class="spacing"><i class="fas fa-credit-card fa-2x"></i>payment status:
+                    {{subinvoice.paymentStatus}}</p>
+                </div>
+                <hr class="hr">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="id03" class="w3-modal">
+          <div class="w3-modal-content">
+            <header class="w3-container bg-dark text-center text-white">
+        <span onclick="document.getElementById('id03').style.display='none'"
+              class="w3-button w3-display-topright">&times;</span>
+              <h2>Gefundene Auto</h2>
+            </header>
+            <div>
+              <br>
+              <button class="btn btn-danger" (click)="selectCarHistroyOn()">Car track history</button>
+              <button class="btn btn-danger" (click)="selectCarLiveOn()">Car tracking live</button>
+              <br>
+              <br>
+
+              <!--Looking into car translocation history-->
+              <div *ngIf="selectCarHistroy" class="w3-container text-dark">
+                <p *ngIf="translocations">amount of translocations: {{translocations.length}}</p>
+                <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="onChoseLocation($event)">
+                  <agm-marker *ngFor="let location of translocations"
+                              [latitude]="location.lat"
+                              [longitude]="location.lon">
+                    <agm-info-window>
+                      Date of visitation: <b>{{location.dateTime | date:'longDate'}}</b>
+                      time of visitation: <b>{{location.dateTime | date:'shortTime'}}</b>
+                    </agm-info-window>
+
+                    <agm-polyline [editable]="false">
+                      <agm-polyline-point *ngFor="let data of translocations"
+                                          [latitude]="data.lat"
+                                          [longitude]="data.lon">
+                      </agm-polyline-point>
+                    </agm-polyline>
+                  </agm-marker>
+                </agm-map>
+              </div>
+
+              <!--Looking into car translocation live data-->
+              <div *ngIf="selectCarLive" class="w3-container text-dark">
+                <agm-map [latitude]="lat" [longitude]="lng">
+                  <agm-marker *ngFor="let location of transLocationsLive"
+                              [latitude]="location.lat"
+                              [longitude]="location.lon">
+                    <agm-info-window>
+                      Date of visitation: <b>{{location.dateTime | date:'longDate'}}</b>
+                      time of visitation: <b>{{location.dateTime | date:'shortTime'}}</b>
+                    </agm-info-window>
+
+                    <agm-polyline [editable]="false">
+                      <agm-polyline-point *ngFor="let data of translocations"
+                                          [latitude]="data.lat"
+                                          [longitude]="data.lon">
+                      </agm-polyline-point>
+                    </agm-polyline>
+                  </agm-marker>
+                </agm-map>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="container-fluid text-center text-dark">
+  <!--Retrieve stolen vehicles from Europol system-->
+  <hr class="bg-dark">
+  <br>
+  <h3 class="text-dark">Stolen vehicles</h3>
+  <br>
+
+  <!--Removing a stolen vehicle from Europol-->
+  <div class="container-fluid col-md-6 text-center">
+    <h2>Entfernen Sie das gestohlene Auto</h2>
+    <form name="form" (ngSubmit)="f.form.valid && removeVehicle()" #f="ngForm" novalidate>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !hashedLicensePlate.valid }">
+        <label for="licencePlate">Nummernschild</label>
+        <input type="text" class="form-control" id="licencePlateEuropol" name="licencePlate" required minlength="3"
+               placeholder="nummernschild..."
+               [(ngModel)]="model.hashedLicensePlate" #licencePlate="ngModel" required/>
+        <div *ngIf="licencePlate.invalid" class="alert alert-warning">
+          <p>Ein Nummernschild ausfüllen</p>
+        </div>
+        <button class="btn btn-danger col-md-12">Remove</button>
+      </div>
+    </form>
+    <br>
+  </div>
+
+  <hr class="bg-dark">
+  <h3 *ngIf="stolenVehicles">total stolen vehicles: {{stolenVehicles.length}}</h3>
+  <div class="row justify-content-center">
+    <div *ngFor="let stolenVehicle of stolenVehicles" class="card" style="width: 18rem;">
+      <div class="card-body stolen">
+        <i class="fas fa-car fa-7x"></i>
+        <h5 class="card-title">Vehicle</h5>
+        <p>country origin: {{stolenVehicle.originCountry}}</p>
+        <p>serial number: {{stolenVehicle.serialNumber}}</p>
+        <p>licence plate: {{stolenVehicle.licensePlate}}</p>
+        <p>
+          <i class="fas fa-search-plus fa-2x"></i>
+          <button class="btn btn-outline-light"
+                  onclick="document.getElementById('id03').style.display='block'">
+            track car
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
